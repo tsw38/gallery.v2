@@ -1,10 +1,8 @@
-import homepage from './homepage/homepageActions';
-import about from './about/aboutActions';
+import homepage from './homepage/index';
+import about from './about/index';
 import archive from './archive/archiveActions';
 import login from './login/loginActions';
-import global from './globalActions.js';
-
-console.log('this is the actions', global);
+import global from './global/index';
 
 export const HomepageActions = homepage;
 export const AboutActions    = about;

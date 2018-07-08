@@ -5,6 +5,7 @@ import { StaticRouter } from 'react-router-dom';
 import { matchRoutes } from 'react-router-config';
 import { Helmet } from 'react-helmet';
 import cheerio from 'cheerio';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 import { App } from '../shared/components';
 
@@ -29,27 +30,46 @@ const asyncMatchRoute = async (routes,location) => {
 
   if(matchedRoute){
     try{
-      generatedHTML = await renderHTML({location, matchedRoute})
+      generatedHTML = await renderHTML({routes, location, matchedRoute})
     } catch (err) {
       generatedHTML = "404";
-      console.log(err);
-      console.error(`<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>`)
+      console.error(`\n\n<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>`)
+      console.error(err);
+      console.error(`<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>\n\n`)
     }
   }
   return generatedHTML;
 }
 
-async function renderHTML({ location, matchedRoute }){
-  const initialState = {};
-  initialState.location = location;
+async function getPrerequisites() {
 
+}
+
+async function renderHTML({routes, location, matchedRoute }){
+  const prerequisites = await matchedRoute[0].preRender();
+  const {
+    key,
+    ...remainingOptions
+  } = prerequisites;
+
+  const state = {
+    [key]: {
+      ...remainingOptions,
+      location
+    }
+  };
+
+  const sheet = new ServerStyleSheet();
   const markup = ReactDOMServer.renderToString(
-    <StaticRouter location={location} context={{}}>
-      <App
-        initialState={initialState}
-      />
-    </StaticRouter>
+    <StyleSheetManager sheet={sheet.instance}>
+      <StaticRouter location={location} context={{}}>
+        <App
+          state={state}
+        />
+      </StaticRouter>
+    </StyleSheetManager>
   )
+  const stylesheets = sheet.getStyleTags();
 
   const virtualDOM = cheerio.load(markup);
   if(virtualDOM('body > div').children().length === 0){
@@ -57,13 +77,10 @@ async function renderHTML({ location, matchedRoute }){
   } else {
     const helmet = Helmet.renderStatic();
 
-    const finalHTML = await HTMLTemplate({ markup,helmet, initialState });
+    const finalHTML = await HTMLTemplate({ markup,helmet,state, stylesheets });
     return finalHTML;
   }
 }
-
-
-
 
 export default async (req,res,next) => {
   const { body, path, cookies } = req;

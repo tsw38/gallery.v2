@@ -2,7 +2,6 @@ const path                    = require('path');
 const webpack                 = require('webpack');
 const WebpackCleanupPlugin    = require('webpack-cleanup-plugin');
 const ExtractTextPlugin       = require('extract-text-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const dotenv_webpack          = require('dotenv-webpack');
 const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
 const dotenv                  = require('dotenv');
@@ -28,20 +27,6 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        //run all scss/sass/css through css and sass loaders
-        {
-          test: /\.s?(c|a)ss$/,
-          use: ExtractTextPlugin.extract({
-            use:[
-              {
-                loader:'css-loader'
-              },{
-                loader:'sass-loader'
-              }
-            ],
-            fallback: "style-loader"
-          })
         }
       ]
     },
@@ -91,19 +76,6 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        {
-          test: /\.s?(c|a)ss$/,
-          use: ExtractTextPlugin.extract({
-            use:[
-              {
-                loader:'css-loader'
-              },{
-                loader:'sass-loader'
-              }
-            ],
-            fallback: "style-loader"
-          })
         }
       ],
     },

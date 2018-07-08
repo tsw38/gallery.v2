@@ -3,22 +3,21 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
-import { GlobalActions } from '../shared/actions';
+import * as AllActions from '../shared/actions';
 
 import {
   App
 } from '../shared/components';
 
-const initialState    = (window) ? window.__INITIAL_STATE__ : {};
-initialState.supportsHistory = 'pushState' in window.history;
-// initialState.GlobalActions = GlobalActions;
-console.log(GlobalActions);
+const state    = (window) ? window.__INITIAL_STATE__ : {};
+state.supportsHistory = 'pushState' in window.history;
 
 async function populate(){
   return await ReactDOM.hydrate(
-    <BrowserRouter forceRefresh={!initialState.supportsHistory}>
+    <BrowserRouter forceRefresh={!state.supportsHistory}>
       <App
-        initialState={initialState}
+        state={state}
+        actions={AllActions}
       />
     </BrowserRouter>,
     document.getElementById('gallery')

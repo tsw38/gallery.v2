@@ -5,6 +5,9 @@
     "stage-0"
   ],
   "plugins":[
+    ["babel-plugin-styled-components", {
+      "ssr": true
+    }],
     "transform-decorators-legacy",
     "transform-class-properties",
     "transform-runtime"

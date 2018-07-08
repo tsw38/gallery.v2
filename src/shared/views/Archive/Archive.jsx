@@ -22,25 +22,33 @@ export default class Archive extends Component{
   }
 
   onImageLoaded(){
-    if(!$('.grid-item').length){
-      setTimeout(() => {this.onImageLoaded();},0)
-    } else {
-      $('.grid-item .background-wrapper--1').imagesLoaded({ background:true })
-      .progress((imgLoad, image) => {
-        $(image.element).parent().css({ 'background-image':`url(${image.url})` })
-        $(image.element).parent().removeClass('loading');
-      });
-      setTimeout(() => {
-        $('.grid-item .background-wrapper--2').imagesLoaded({ background:true })
-        .progress((imgLoad, image) => {
-          $(image.element).parent().css({ 'background-image':`url(${image.url})` })
-          $(image.element).parent().removeClass('thumbnail');
-        });
-      },2000)
-    }
+    // if(!$('.grid-item').length){
+    //   setTimeout(() => {this.onImageLoaded();},0)
+    // } else {
+    //   $('.grid-item .background-wrapper--1').imagesLoaded({ background:true })
+    //   .progress((imgLoad, image) => {
+    //     $(image.element).parent().css({ 'background-image':`url(${image.url})` })
+    //     $(image.element).parent().removeClass('loading');
+    //   });
+    //   setTimeout(() => {
+    //     $('.grid-item .background-wrapper--2').imagesLoaded({ background:true })
+    //     .progress((imgLoad, image) => {
+    //       $(image.element).parent().css({ 'background-image':`url(${image.url})` })
+    //       $(image.element).parent().removeClass('thumbnail');
+    //     });
+    //   },2000)
+    // }
+  }
+
+  componentWillMount(){
+    // const { appStore } = this.props;
+    // if(!/^archive$/.test(appStore.type)){
+    //   appStore.getArchiveOrder();
+    // }
   }
 
   componentDidMount(){
+    // console.log('Archive page props', this.props);
     // const { appStore } = this.props;
 
     // imagesLoaded.makeJQueryPlugin($);
@@ -54,13 +62,6 @@ export default class Archive extends Component{
     //   itemSelector: '.grid-item'
     // });
 
-  }
-
-  componentWillMount(){
-    // const { appStore } = this.props;
-    // if(!/^archive$/.test(appStore.type)){
-    //   appStore.getArchiveOrder();
-    // }
   }
 
   componentWillUnmount(){
@@ -95,17 +96,19 @@ export default class Archive extends Component{
   }
 
   render(){
+    const {
+      location
+    } = this.props;
+
     return (
       <ViewWrapper page="archive">
         <Helmet title="Archive - Chicago Wedding & Portrait Photographer" />
-        <div className="pageContainer">
-          <div className="grid">
-            {this.generateGallery()}
-          </div>
+        <div className="grid">
+          {this.generateGallery()}
         </div>
         <Consumer>
-          {(context) => (
-            <p>I'm a child of the {context.state.location}</p>
+          {context => (
+            <p>I'm a child of the {location.pathname}</p>
           )}
         </Consumer>
       </ViewWrapper>

@@ -9,6 +9,12 @@ import {
   Archive
 } from '../../shared/views';
 
+import {
+  GlobalActions,
+  HomepageActions,
+  AboutActions
+} from '../../shared/actions';
+
 const routes = [
   {
     component: App,
@@ -17,8 +23,14 @@ const routes = [
         path: '/',
         exact:true,
         component: Homepage,
-        preRender: () => {
-          return "I NEEEED STUFF DONE HERE"
+        preRender: async () => {
+          // console.log("--------------------", GlobalActions, '---------------------')
+          const requiredToRender = await GlobalActions.imagesHelper.getAllImages();
+          return {
+            ...HomepageActions.stateManager.initState(),
+            images: requiredToRender,
+            key: 'homepage'
+          };
         }
       },
       {
@@ -26,23 +38,34 @@ const routes = [
         exact:true,
         component: Archive,
         preRender: () => {
-          return "I NEEEED STUFF DONE HERE"
+          return {
+            key: 'archive',
+            requiredStuff: "I NEEEED STUFF DONE HERE"
+          }
         }
       },
       {
         path: '/about/',
         exact:true,
         component: About,
-        preRender: () => {
-          return "I NEEEED STUFF DONE HERE"
+        preRender: async () => {
+          // console.warn('this is where the prerequired info would be')
+          return {
+            key: 'about',
+            ...AboutActions.stateManager.initState()
+          }
         }
       },
       {
+        name: 'Login',
         path: '/login/',
         exact:true,
         component: Login,
         preRender: () => {
-          return "I NEEEED STUFF DONE HERE"
+          return {
+            key: 'login',
+            requiredStuff: "I NEEEED STUFF DONE HERE"
+          }
         }
       }
     ]
