@@ -2,11 +2,8 @@ const path                    = require('path');
 const webpack                 = require('webpack');
 const WebpackCleanupPlugin    = require('webpack-cleanup-plugin');
 const ExtractTextPlugin       = require('extract-text-webpack-plugin');
-const dotenv_webpack          = require('dotenv-webpack');
 const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
-const dotenv                  = require('dotenv');
-
-dotenv.config();
+const dotenv                  = require('dotenv-webpack');
 
 module.exports = [
   {
@@ -48,11 +45,8 @@ module.exports = [
       ]
     },
     plugins: [
-      new webpack.optimize.OccurrenceOrderPlugin(),
-      new dotenv_webpack({
-        path: './.env',
-        safe:true
-      })
+      new dotenv(),
+      new webpack.optimize.OccurrenceOrderPlugin()
     ]
   },
   {

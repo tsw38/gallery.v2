@@ -20,7 +20,7 @@ class About extends React.Component {
 
     const { state, actions } = this.props;
 
-    console.log('mounting with this state');
+    // console.log('mounting with this state');
 
     this.state = state.about ? {
       ...state.about,
@@ -97,10 +97,9 @@ const InnerWrapper = styled.div`
   display: flex;
   justify-content:center;
   align-items:center;
-  width: calc(100% + 20px);
+  width: 100%;
   height:100%;
   overflow: auto;
-  padding-right:20px;
   position:relative;
   z-index:10;
   transition: opacity 1s ease-in;
@@ -116,7 +115,6 @@ const InnerWrapper = styled.div`
 
 const PositionedContent = styled.div`
   width: calc(50vw - 20px);
-  height:33vh;
   max-width:535px;
 `;
 
@@ -135,7 +133,7 @@ const LeftContent = PositionedContent.extend`
   @media only screen and (max-width:920px){
     max-width:none;
     width:50vw;
-    height:50vw;
+    height: calc(55vh - 20px);
     margin:45px 0 20px 0;
 
     img{
@@ -153,6 +151,8 @@ const LeftContent = PositionedContent.extend`
 `;
 
 const RightContent = PositionedContent.extend`
+  padding-right:20px;
+
   h1{
     font-family:'Permanent Marker',cursive;
     font-size:50px;
@@ -181,9 +181,17 @@ const RightContent = PositionedContent.extend`
   @media only screen and (max-width:920px){
     max-width:none;
     width:50vw;
+    padding-right: initial;
+    height:45vh;
+
+    h1{
+      font-size:40px;
+      margin-bottom:10px;
+    }
 
     p{
       padding:0;
+      font-size:14px;
 
       span{
         display:block;
@@ -203,7 +211,7 @@ const RightContent = PositionedContent.extend`
 `;
 
 const BackgroundWrapper = styled.div`
-  background-image:url(${Variables.ABOUT_BACKGROUND});
+  background-image:url(${Variables.origin + '/api/images/random'});
   background-repeat:no-repeat;
   background-size:cover;
   user-select: none;

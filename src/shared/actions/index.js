@@ -1,6 +1,6 @@
 import homepage from './homepage/index';
 import about from './about/index';
-import archive from './archive/archiveActions';
+import archive from './archive/index';
 import login from './login/loginActions';
 import global from './global/index';
 

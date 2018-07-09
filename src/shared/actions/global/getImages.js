@@ -1,10 +1,9 @@
-const axios  = (typeof window !== 'undefined') ? window.axios = require('axios') : require('axios');
-const origin = "https://tylerscott.gallery";
+import { Variables } from '../../utils';
 
 async function getAllImages() {
-  const response = await axios(`${origin}/api/images`);
+  const response = await Variables.axios(`${Variables.origin}/api/images`);
   const images = response.data;
-  return images.map(image => `${origin}/api/images/${image}`);
+  return images.map(image => `${Variables.origin}/api/images/${image}`);
 }
 
 export {

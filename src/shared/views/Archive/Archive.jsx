@@ -3,69 +3,30 @@ import uuid from 'uuid/v4';
 import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 
-import {
-  ViewWrapper
-} from '../index';
-
-import {
-  Consumer
-} from '../../context/Context.jsx';
+import { ViewWrapper } from '../index';
+import { Consumer } from '../../context/Context.jsx';
+import { Variables } from '../../utils';
 
 
-// import imagesLoaded from 'imagesloaded';
-export default class Archive extends Component{
+class Archive extends Component{
   constructor(props){
     super(props);
-    this.state = {
-      loadingImages:''
-    }
+    const { state, actions } = this.props;
+
+    this.state = state.archive ? {
+      ...state.archive
+    } : actions.ArchiveActions.stateManager.initState()
   }
 
-  onImageLoaded(){
-    // if(!$('.grid-item').length){
-    //   setTimeout(() => {this.onImageLoaded();},0)
-    // } else {
-    //   $('.grid-item .background-wrapper--1').imagesLoaded({ background:true })
-    //   .progress((imgLoad, image) => {
-    //     $(image.element).parent().css({ 'background-image':`url(${image.url})` })
-    //     $(image.element).parent().removeClass('loading');
-    //   });
-    //   setTimeout(() => {
-    //     $('.grid-item .background-wrapper--2').imagesLoaded({ background:true })
-    //     .progress((imgLoad, image) => {
-    //       $(image.element).parent().css({ 'background-image':`url(${image.url})` })
-    //       $(image.element).parent().removeClass('thumbnail');
-    //     });
-    //   },2000)
-    // }
+  async componentWillMount(){
   }
 
-  componentWillMount(){
-    // const { appStore } = this.props;
-    // if(!/^archive$/.test(appStore.type)){
-    //   appStore.getArchiveOrder();
-    // }
+  async componentDidMount(){
+    console.log("THIS IS THE GALLERY", this.props.state.archive);
+    console.log("THIS IS THE INTERNAL STATE", this.state);
   }
 
-  componentDidMount(){
-    // console.log('Archive page props', this.props);
-    // const { appStore } = this.props;
-
-    // imagesLoaded.makeJQueryPlugin($);
-    // jQueryBridget('masonry', Masonry, $);
-
-
-    // this.onImageLoaded();
-
-
-    // var $grid = $(".grid").masonry({
-    //   itemSelector: '.grid-item'
-    // });
-
-  }
-
-  componentWillUnmount(){
-    // $('.grid-item.loading img').off('load');
+  async componentWillUnmount(){
   }
 
   generateGallery(){
@@ -106,12 +67,16 @@ export default class Archive extends Component{
         <div className="grid">
           {this.generateGallery()}
         </div>
-        <Consumer>
-          {context => (
-            <p>I'm a child of the {location.pathname}</p>
-          )}
-        </Consumer>
+        THIS IS THE ARCHIVE PAGE
       </ViewWrapper>
     )
   }
 }
+
+export default props => (
+  <Consumer>
+    {context => {
+      return <Archive {...props} {...context} />
+    }}
+  </Consumer>
+)

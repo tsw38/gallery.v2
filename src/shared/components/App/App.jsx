@@ -78,6 +78,7 @@ injectGlobal`
   }
   body {
   	line-height: 1;
+    overflow:hidden;
   }
   ol, ul {
   	list-style: none;

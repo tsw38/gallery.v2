@@ -12,7 +12,8 @@ import {
 import {
   GlobalActions,
   HomepageActions,
-  AboutActions
+  AboutActions,
+  ArchiveActions
 } from '../../shared/actions';
 
 const routes = [
@@ -37,10 +38,13 @@ const routes = [
         path: '/archive/',
         exact:true,
         component: Archive,
-        preRender: () => {
+        preRender: async () => {
+          const gallery = await ArchiveActions.gallery.getThumbnails();
+          // console.log('THIS IS THE GALLERY', gallery);
           return {
-            key: 'archive',
-            requiredStuff: "I NEEEED STUFF DONE HERE"
+            ...ArchiveActions.stateManager.initState(),
+            gallery,
+            key: 'archive'
           }
         }
       },

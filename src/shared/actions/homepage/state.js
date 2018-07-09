@@ -1,7 +1,4 @@
 // Homepage actions
-import { GlobalActions } from '../index';
-import { Variables } from '../../utils';
-
 const initState = (nextState = {}) => {
   return {
     timer: null,
