@@ -16,19 +16,44 @@ class Archive extends React.Component{
     const { state, actions } = this.props;
 
     this.state = state.archive ? {
-      ...state.archive
+      ...state.archive,
+      render: false
     } : actions.ArchiveActions.stateManager.initState()
   }
 
   async componentWillMount(){
   }
 
-  async componentDidMount(){
-    console.log("THIS IS THE GALLERY", this.props.state.archive);
-    console.log("THIS IS THE INTERNAL STATE", this.state);
+  async componentDidMount() {
+    const {
+      actions,
+      stateUpdater
+    } = this.props;
+    const {ArchiveActions} = actions;
+
+    if(this.state.gallery.length === 0){
+      const gallery = await ArchiveActions.gallery.getThumbnails();
+      
+      this.setState({
+        ...this.state,
+        gallery
+      })
+
+      await stateUpdater('archive', {
+        ...this.state,
+        gallery
+      });
+    }
+
+    setTimeout(async () => {
+      await this.props.actions.GlobalActions.page.render(this.props, 'archive');
+    }, 1000);
   }
 
-  async componentWillUnmount(){
+
+
+  async componentWillUnmount() {
+    await this.props.actions.GlobalActions.page.hide(this.props, 'archive');
   }
 
   generateThumbnails() {

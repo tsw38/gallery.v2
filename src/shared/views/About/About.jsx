@@ -18,8 +18,6 @@ class About extends React.Component {
 
     const { state, actions } = this.props;
 
-    // console.log('mounting with this state');
-
     this.state = state.about ? {
       ...state.about,
       render: false
@@ -38,13 +36,13 @@ class About extends React.Component {
   }
 
   async componentDidMount(){
-    await this.props.actions.AboutActions.page.render(this.props);
+    await this.props.actions.GlobalActions.page.render(this.props, 'about');
   }
 
 
 
   async componentWillUnmount(){
-    await this.props.actions.AboutActions.page.hide(this.props);
+    await this.props.actions.GlobalActions.page.hide(this.props, 'about');
   }
 
 
