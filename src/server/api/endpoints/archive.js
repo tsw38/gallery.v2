@@ -8,15 +8,20 @@ export default async (req,res,next) => {
       database:process.env.DB_NAME
     });
 
+    mysql_conn.connect(function (err) {
+      if (err) {
+        console.error('error connecting: ' + err.stack);
+        return;
+      }
+
+      console.log('connected as id ' + mysql_conn.threadId);
+    });
+
     mysql_conn.query('SELECT albumName, url, photoName FROM photos RIGHT JOIN albums on photos.photoID = albums.thumbnailID ORDER BY photos.timestamp desc;', (err,rows) => {
-      var results = [];
       if(err){
         if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
       } else {
-        rows.forEach((payload, index) => {
-          results.push(payload);
-        });
-        res.json(results);
+        res.json(rows);
       }
     });
   }

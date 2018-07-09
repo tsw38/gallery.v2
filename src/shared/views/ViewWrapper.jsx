@@ -12,7 +12,7 @@ export default class ViewWrapper extends React.Component {
       <React.Fragment>
         <Header hideMenu={this.props.hideMenu} />
         <Page>
-          <PageContainer>
+          <PageContainer className={this.props.page}>
             {this.props.children}
           </PageContainer>
         </Page>
@@ -34,4 +34,10 @@ const PageContainer = styled.div`
   height: inherit;
   width: inherit;
   position:relative;
+
+  &.archive{
+    overflow-y: auto;
+    padding-right:20px;
+    margin-right:20px;
+  }
 `;

@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
-import classNames from 'classnames';
 
 import {
   ViewWrapper
@@ -91,7 +89,6 @@ export default props => (
     }}
   </Consumer>
 )
-const PageContainer = styled.div``;
 
 const InnerWrapper = styled.div`
   display: flex;

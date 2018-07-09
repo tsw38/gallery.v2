@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import uuid from 'uuid/v4';
-import { Link } from 'react-router';
+
 import { Helmet } from 'react-helmet';
+import styled, { css } from 'styled-components';
 
 import { ViewWrapper } from '../index';
 import { Consumer } from '../../context/Context.jsx';
 import { Variables } from '../../utils';
+import Thumbnail from './Thumbnail.jsx';
 
 
-class Archive extends Component{
+class Archive extends React.Component{
   constructor(props){
     super(props);
     const { state, actions } = this.props;
@@ -29,31 +31,18 @@ class Archive extends Component{
   async componentWillUnmount(){
   }
 
-  generateGallery(){
-    // const { appStore } = this.props;
-    // let imageArray =[];
-    // if(appStore.archiveImageOrder){
-    //   imageArray = appStore.archiveImageOrder.map((image) => {
-    //     let thumb = 'https://tylerscott.gallery/api/images/' + image.replace(/\.jpg/g,'-thumb.jpg');
-    //     return (
-    //       <div key={uuid()} className="grid-item thumbnail loading">
-    //         <div className="background-wrapper--1" style={{backgroundImage: `url(${thumb})`}} />
-    //         <div className="background-wrapper--2" style={{backgroundImage: `url(${appStore.origin}/api/images/${image})`}} />
-    //       </div>
-    //     );
-    //   })
-    // } else if(/^archive$/.test(appStore.type)){
-    //   imageArray = appStore.images.map((image,index) => {
-    //     let thumb = 'https://tylerscott.gallery/api/images/' + image.replace(/\.jpg/g,'-thumb.jpg');
-    //     return (
-    //       <div key={uuid()} className="grid-item thumbnail loading">
-    //         <div className="background-wrapper--1" style={{backgroundImage: `url(${thumb})`}} />
-    //         <div className="background-wrapper--2" style={{backgroundImage: `url(${appStore.origin}/api/images/${image})`}} />
-    //       </div>
-    //     );
-    //   })
-    // }
-    // return imageArray;
+  generateThumbnails() {
+    const { gallery } = this.state;
+    return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map((item) => {
+      return (
+        <Thumbnail
+          key={uuid()}
+          albumName={item.albumName}
+          photoName={item.photoName}
+          url={item.url}>
+        </Thumbnail>
+      )
+    }) : null;
   }
 
   render(){
@@ -64,10 +53,9 @@ class Archive extends Component{
     return (
       <ViewWrapper page="archive">
         <Helmet title="Archive - Chicago Wedding & Portrait Photographer" />
-        <div className="grid">
-          {this.generateGallery()}
-        </div>
-        THIS IS THE ARCHIVE PAGE
+        <GridWrapper>
+          {this.generateThumbnails()}
+        </GridWrapper>
       </ViewWrapper>
     )
   }
@@ -80,3 +68,12 @@ export default props => (
     }}
   </Consumer>
 )
+
+const GridWrapper = styled.div`
+  display:grid;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto;
+  width:100%;
+  height:100%;
+  margin-top:45px;
+`
