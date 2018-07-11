@@ -19,6 +19,7 @@ class Archive extends React.Component{
       ...state.archive,
       render: false
     } : actions.ArchiveActions.stateManager.initState()
+    this.onThumbnailClick = this.onThumbnailClick.bind(this);
   }
 
   async componentWillMount(){
@@ -33,7 +34,7 @@ class Archive extends React.Component{
 
     if(this.state.gallery.length === 0){
       const gallery = await ArchiveActions.gallery.getThumbnails();
-      
+
       this.setState({
         ...this.state,
         gallery
@@ -56,12 +57,20 @@ class Archive extends React.Component{
     await this.props.actions.GlobalActions.page.hide(this.props, 'archive');
   }
 
+  async onThumbnailClick(albumName) {
+    await this.props.stateUpdater('gallery', {
+      navigatedAlbumName: albumName,
+      [albumName]: {}
+    });
+  }
+
   generateThumbnails() {
     const { gallery } = this.state;
     return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map((item) => {
       return (
         <Thumbnail
           key={uuid()}
+          onClick={() => this.onThumbnailClick(item.url)}
           albumName={item.albumName}
           photoName={item.photoName}
           url={item.url}>
@@ -100,5 +109,4 @@ const GridWrapper = styled.div`
   grid-template-columns: auto auto auto;
   width:100%;
   height:100%;
-  margin-top:45px;
 `

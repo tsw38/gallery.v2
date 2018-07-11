@@ -35,7 +35,7 @@ const PageContainer = styled.div`
   width: inherit;
   position:relative;
 
-  &.archive{
+  &.archive, &.gallery{
     overflow-y: auto;
     padding-right:20px;
     margin-right:20px;

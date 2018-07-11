@@ -6,7 +6,8 @@ import {
   Homepage,
   About,
   Login,
-  Archive
+  Archive,
+  Gallery
 } from '../../shared/views';
 
 import {
@@ -36,8 +37,24 @@ const routes = [
       },
       {
         path: '/archive/',
-        exact:true,
+        exact: false,
         component: Archive,
+        routes: [
+          { path: '/archive/:gallery',
+            component: Gallery,
+            preRender: async (gallery) => {
+              // console.warn('this is the input gallery?', gallery);
+              const images = await ArchiveActions.gallery.getGallery(gallery);
+
+              return {
+                ...ArchiveActions.stateManager.initGalleryState(),
+                navigatedAlbumName: gallery,
+                [gallery]: {images},
+                key: 'gallery'
+              }
+            }
+          }
+        ],
         preRender: async () => {
           const gallery = await ArchiveActions.gallery.getThumbnails();
           // console.log('THIS IS THE GALLERY', gallery);

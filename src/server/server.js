@@ -14,6 +14,7 @@ import {
   imagesEndpoint,
   archiveEndpoint,
   sitemapEndpoint,
+  galleryEndpoint,
   loginEndpoint
 } from './api';
 
@@ -41,7 +42,8 @@ app
 .use('*/css', express.static(`./build/${process.env.VERSION_NUMBER}/client`))
 .use('*/js', express.static(`./build/${process.env.VERSION_NUMBER}/client`))
 .get('/api/images(/:folder)?(/:image)?', imagesEndpoint)
-.get('/api/archive/?', archiveEndpoint)
+.get('/api/archive(/:gallery)?', archiveEndpoint)
+.get('/api/gallery/:gallery', galleryEndpoint)
 .get('/sitemap/?',sitemapEndpoint)
 .use(ServerRenderer);
 

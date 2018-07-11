@@ -46,7 +46,7 @@ export default class Header extends React.Component {
 
 const StyledHeader = styled.header`
   position:absolute;
-  top:0; left:0; right:0;
+  top:-1px; left:0; right:0;
   z-index:1000;
   max-height:45px;
   height:45px;

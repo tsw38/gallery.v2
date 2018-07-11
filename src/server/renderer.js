@@ -16,6 +16,7 @@ const asyncMatchRoute = async (routes,location) => {
   let generatedHTML = '';
 
   const branch = await matchRoutes(routes,location);
+// console.warn('THIS IS THE SERVER RENDERER',branch);
 
   let matchedRoute = branch
     .filter(Boolean)
@@ -46,7 +47,9 @@ async function getPrerequisites() {
 }
 
 async function renderHTML({routes, location, matchedRoute }){
-  const prerequisites = await matchedRoute[0].preRender();
+  const subpage = location.split('/').pop();
+  console.log('this is the matchedRoute', matchedRoute, location);
+  const prerequisites = await matchedRoute[0].preRender(subpage);
   const {
     key,
     ...remainingOptions
@@ -54,10 +57,13 @@ async function renderHTML({routes, location, matchedRoute }){
 
   const state = {
     [key]: {
+      key,
       ...remainingOptions,
       location
     }
   };
+
+  console.warn(state);
 
   const sheet = new ServerStyleSheet();
   const markup = ReactDOMServer.renderToString(

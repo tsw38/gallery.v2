@@ -10,6 +10,7 @@ import {
 import {
   Homepage,
   Archive,
+  Gallery,
   About,
   Login
 } from '../../views/index';
@@ -41,6 +42,7 @@ export default class App extends React.Component {
             <AppProvider {...this.props}>
               <Route exact path="/" component={ Homepage } />
               <Route exact path="/archive/" component={ Archive } />
+              <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
             </AppProvider>
