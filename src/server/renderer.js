@@ -48,7 +48,7 @@ async function getPrerequisites() {
 
 async function renderHTML({routes, location, matchedRoute }){
   const subpage = location.split('/').pop();
-  console.log('this is the matchedRoute', matchedRoute, location);
+  // console.log('this is the matchedRoute', matchedRoute, location);
   const prerequisites = await matchedRoute[0].preRender(subpage);
   const {
     key,
@@ -63,7 +63,7 @@ async function renderHTML({routes, location, matchedRoute }){
     }
   };
 
-  console.warn(state);
+  // console.warn(state);
 
   const sheet = new ServerStyleSheet();
   const markup = ReactDOMServer.renderToString(

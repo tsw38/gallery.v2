@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components';
 
 import { ViewWrapper } from '../index';
 import { Consumer } from '../../context/Context.jsx';
-import { Variables } from '../../utils';
+import { Variables, ObjectUtil } from '../../utils';
 import Thumbnail from './Thumbnail.jsx';
 
 
@@ -19,10 +19,17 @@ class Archive extends React.Component{
       ...state.archive,
       render: false
     } : actions.ArchiveActions.stateManager.initState()
-    this.onThumbnailClick = this.onThumbnailClick.bind(this);
   }
 
-  async componentWillMount(){
+  async componentWillReceiveProps(nextProps){
+    const parentState = await nextProps.getParentState('archive');
+    const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
+    if (stateChanged) {
+      this.setState({
+        ...this.state,
+        ...parentState
+      });
+    }
   }
 
   async componentDidMount() {
@@ -30,7 +37,7 @@ class Archive extends React.Component{
       actions,
       stateUpdater
     } = this.props;
-    const {ArchiveActions} = actions;
+    const {ArchiveActions, GlobalActions} = actions;
 
     if(this.state.gallery.length === 0){
       const gallery = await ArchiveActions.gallery.getThumbnails();
@@ -46,9 +53,7 @@ class Archive extends React.Component{
       });
     }
 
-    setTimeout(async () => {
-      await this.props.actions.GlobalActions.page.render(this.props, 'archive');
-    }, 1000);
+    await GlobalActions.page.render(this.props, 'archive');
   }
 
 
@@ -59,8 +64,8 @@ class Archive extends React.Component{
 
   async onThumbnailClick(albumName) {
     await this.props.stateUpdater('gallery', {
-      navigatedAlbumName: albumName,
-      [albumName]: {}
+      albumName,
+      render: false
     });
   }
 
@@ -85,7 +90,8 @@ class Archive extends React.Component{
     } = this.props;
 
     return (
-      <ViewWrapper page="archive">
+      <ViewWrapper page="archive"
+          render={this.state.render}>
         <Helmet title="Archive - Chicago Wedding & Portrait Photographer" />
         <GridWrapper>
           {this.generateThumbnails()}

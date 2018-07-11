@@ -26,7 +26,6 @@ const routes = [
         exact:true,
         component: Homepage,
         preRender: async () => {
-          // console.log("--------------------", GlobalActions, '---------------------')
           const requiredToRender = await GlobalActions.imagesHelper.getAllImages();
           return {
             ...HomepageActions.stateManager.initState(),
@@ -48,7 +47,7 @@ const routes = [
 
               return {
                 ...ArchiveActions.stateManager.initGalleryState(),
-                navigatedAlbumName: gallery,
+                albumName: gallery,
                 [gallery]: {images},
                 key: 'gallery'
               }

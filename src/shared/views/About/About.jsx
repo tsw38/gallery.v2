@@ -52,10 +52,11 @@ class About extends React.Component {
     } = this.props;
 
     return (
-      <ViewWrapper page="about">
+      <ViewWrapper
+        page="about"
+        render={this.state.render}>
         <Helmet title="About - Chicago Wedding & Portrait Photographer" />
-        <InnerWrapper
-          render={this.state.render}>
+        <InnerWrapper>
           <LeftContent>
             <img src={`${Variables.origin}/api/images/portrait`} alt="self portrait" />
           </LeftContent>
@@ -98,10 +99,6 @@ const InnerWrapper = styled.div`
   position:relative;
   z-index:10;
   transition: opacity 1s ease-in;
-  ${props => css`
-      opacity: ${props.render ? 1 : 0};
-    `
-  }
 
   @media only screen and (max-width:920px){
     flex-direction: column;

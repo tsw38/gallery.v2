@@ -4,14 +4,15 @@ import {
   Footer
 } from '../components';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export default class ViewWrapper extends React.Component {
   render(){
     return(
       <React.Fragment>
         <Header hideMenu={this.props.hideMenu} />
-        <Page>
+        <Page
+          render={this.props.render}>
           <PageContainer className={this.props.page}>
             {this.props.children}
           </PageContainer>
@@ -27,7 +28,9 @@ const Page = styled.div`
   height: 100%;
   width: 100%;
   overflow: hidden;
-  user-select: ${props => (/homepage/.test(props.page)) ? 'none' : 'initial' }
+  user-select: ${props => (/homepage/.test(props.page)) ? 'none' : 'initial' };
+  transition: opacity 500ms ease;
+  opacity: ${props => props.render ? 1 : 0};
 `;
 
 const PageContainer = styled.div`

@@ -67,7 +67,8 @@ class Homepage extends React.Component{
 
   render(){
     return (
-      <ViewWrapper page="homepage">
+      <ViewWrapper page="homepage"
+        render={true}>
         <Helmet title="Chicago Wedding & Portrait Photographer" />
         <BackgroundWrapper>
           <Background

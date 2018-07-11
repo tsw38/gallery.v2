@@ -1,27 +1,44 @@
 import React from 'react';
-import uuid from 'uuid/v4';
 
 import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
 
 import { ViewWrapper } from '../index';
 import { Consumer } from '../../context/Context.jsx';
-import { Variables } from '../../utils';
+import { Variables, ObjectUtil } from '../../utils';
 
 
 class Gallery extends React.Component{
   constructor(props){
     super(props);
-
     const { state, actions } = this.props;
-    // console.log(actions.ArchiveActions.stateManager.initGalleryState());
+    
     this.state = state.gallery ? {
       ...state.gallery,
       render: false
     } : actions.ArchiveActions.stateManager.initGalleryState()
   }
 
-  async componentWillMount(){
+  async componentWillReceiveProps(nextProps){
+    const {
+      getParentState
+    } = nextProps;
+    
+    const parentState = await getParentState('gallery');
+    
+    
+    const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
+    if(stateChanged){
+      this.setState({
+        ...this.state,
+        ...parentState
+      });
+    }
+    
+    console.log(this.state, 5);
+    console.log('-');
+    console.log(parentState, 5);
+    console.log('COMPONENTWILLRECEIVEPROPS', 5);
   }
 
   async componentDidMount() {
@@ -30,46 +47,63 @@ class Gallery extends React.Component{
       stateUpdater,
       getParentState
     } = this.props;
-    const {ArchiveActions} = actions;
 
-    const parentState = await getParentState();
-    await this.props.stateUpdater('gallery', {
-      ...this.state,
-      navigatedAlbumName: ('gallery' in parentState) ? parentState.gallery.navigatedAlbumName : ''
-    });
+    const parentState = await getParentState('gallery');
+    const albumName   = (parentState) ? parentState.albumName : '';
+    console.log(`ALBUM NAME FROM PROVIDER ${albumName}`, 8);
+    console.log(ObjectUtil.deepFind(parentState, `${albumName}`), 8);
 
-    if(parentState && parentState.gallery && !parentState.gallery[parentState.gallery.navigatedAlbumName].images){
-
-        const images = await ArchiveActions.gallery.getGallery(parentState.gallery.navigatedAlbumName);
-        this.setState({
-          ...this.state,
-          [parentState.gallery.navigatedAlbumName]: {images}
-        })
-
+    if (!this.state[this.state.albumName] && !ObjectUtil.deepFind(parentState, this.state.albumName)) {
+      const images = await actions.ArchiveActions.gallery.getGallery(this.state.albumName);
+      console.log(images, 1);
+      this.setState({
+        ...this.state,
+        [this.state.albumName]: {
+          images
+        },
+      }, async () => {
+        setTimeout(async () => {
+          await stateUpdater('gallery', {
+            ...this.state,
+            render: true
+          });
+        }, 0);
+      })
+    } else {
+      setTimeout(async () => {
         await stateUpdater('gallery', {
           ...this.state,
-          [parentState.gallery.navigatedAlbumName]: {images}
+          render: true
         });
+      }, 100);
     }
-
-    setTimeout(async () => {
-      await this.props.actions.GlobalActions.page.render(this.props, 'gallery');
-    }, 1000);
+    console.log('MOUNT STATE', this.state);
+    
+    
+    console.log("COMPONENTDIDMOUNT", 1);
   }
 
-
-
   async componentWillUnmount() {
-    await this.props.stateUpdater('gallery', {
+    
+    const {
+      stateUpdater,
+      actions
+    } = this.props;
+
+    await stateUpdater('gallery', {
       ...this.state,
-      navigatedAlbumName: ''
+      albumName: '',
+      render: false
     });
-    await this.props.actions.GlobalActions.page.hide(this.props, 'gallery');
+
+    console.log("COMPONENTDISMOUNTING", 3);
+    await actions.GlobalActions.page.hide(this.props, 'gallery');
   }
 
   generateFirstImage() {
-    const {navigatedAlbumName} = this.props.state.gallery;
-    const firstImage = this.state[navigatedAlbumName].images && this.state[navigatedAlbumName].images[0];
+    const {albumName} = this.state;
+    
+    const firstImage = this.state[albumName] && this.state[albumName].images[0];
     return firstImage && (
       <FirstGalleryImage>
         <img src={`${Variables.origin}/api/images/${firstImage.url}/${firstImage.photoName}`} alt="" />
@@ -81,8 +115,8 @@ class Gallery extends React.Component{
   }
 
   generateGallery() {
-    const {navigatedAlbumName} = this.props.state.gallery;
-    return this.state[navigatedAlbumName].images && this.state[navigatedAlbumName].images.map((image,index) => {
+    const {albumName} = this.state;
+    return this.state[albumName] && this.state[albumName].images.map((image, index) => {
       return (
         <GalleryImage
           backgroundImage={`${Variables.origin}/api/images/${image.url}/${image.photoName}`}
@@ -95,12 +129,13 @@ class Gallery extends React.Component{
 
   render(){
     return (
-      <ViewWrapper page="gallery">
+      <ViewWrapper page="gallery"
+        render={this.state.render}>
         <Helmet title="Gallery - Chicago Wedding & Portrait Photographer" />
         <GalleryWrapper>
-          {this.generateFirstImage()}
+          { this.generateFirstImage() }
           <Subgrid>
-            {this.generateGallery()}
+            { this.generateGallery() }
           </Subgrid>
         </GalleryWrapper>
       </ViewWrapper>

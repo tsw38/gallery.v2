@@ -4,7 +4,8 @@ import { Helmet } from 'react-helmet';
 import { injectGlobal } from 'styled-components';
 
 import {
-  Variables
+  Variables,
+  Console
 } from '../../utils';
 
 import {
@@ -19,6 +20,8 @@ import {
   AppProvider
 } from '../../context/Context.jsx';
 
+Console();
+
 export default class App extends React.Component {
   render(){
     return(
@@ -31,8 +34,8 @@ export default class App extends React.Component {
             {rel:"canonical", href: `https://tylerscott.gallery/`}
           ]}
           meta={[
-            {name: "description", content: "Photographer &amp; Small Scale Explorer. As a Chicago based Southwest Florida transplant via New Jersey I\'ve traveled a fair amount and have found the most joy out of capturing you in your element. Let me prove it."},
-            {name: "keywords", content: "photography, Photography, photographer, Photographer, Tyler Scott Williams, Tyler Scott, Tyler, tyler scott, tyler scott williams, wedding,headshots, headshot, portraits, wedding day, portrait, dslr, new york, New York, Manhattan, New York City, New York, New Jersey, Jersey City, JC, NJ, commercial, blog, contact, chicago, chi, chitown, south west florida, Florida, Senior Portraits, Maternity Portraits, Commerical, Professional Photography"},
+            {name: "description", content: "Photographer &amp; Small Scale Explorer. As a Chicago transplant via New Jersey I\'ve traveled a fair amount and have found the most joy out of capturing you in your element. Let me prove it."},
+            {name: "keywords", content: "photography, Photography, photographer, Photographer, Tyler Scott Williams, Tyler Scott, Tyler, tyler scott, tyler scott williams, wedding, headshots, headshot, portraits, wedding day, portrait, dslr, new york, New York, Manhattan, New York City, New York, New Jersey, Jersey City, JC, NJ, commercial, blog, contact, Chicago, Chi, Chitown, south west florida, Florida, Senior Portraits, Maternity Portraits, Commercial, Professional Photography, Illinois, Chicago IL, 60657"},
             {property: "og:site_name", content: 'Tyler Scott | Chicago Wedding & Portrait Photographer'},
             {property: "og:type", content: 'website'},
             {property: "og:url", content: 'https://tylerscott.gallery/'},

@@ -9,7 +9,7 @@ const initState = (nextState = {}) => {
 
 const initGalleryState = (nextState = {}) => {
   return {
-    navigatedAlbumName: '',
+    albumName: '',
     render: false,
     ...nextState
   }
