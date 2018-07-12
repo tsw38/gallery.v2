@@ -6,7 +6,7 @@ const dotenv                  = require('dotenv');
 const dotenv_webpack          = require('dotenv-webpack');
 
 dotenv.config();
-console.log('this is the origin', process.env);
+
 module.exports = [
   {
     name: 'client',
@@ -27,18 +27,12 @@ module.exports = [
           loader: 'babel-loader'
         },
         {
-          test: /\.jsx?$/,
-          exclude: /(node_modules\/)/,
-          use:[
-            // {
-            //   loader: 'replace-string-loader',
-            //   options: {
-            //     search: /\.\/css\/styles\.css/ig,
-            //     replace: 'https://tylerscott.gallery.com/css/styles.css',
-            //     file:false
-            //   }
-            // }
-          ]
+          test: /\.env$/,
+          loader: 'string-replace-loader',
+          options: {
+            search: 'ENVIRONMENT=DEVELOPMENT',
+            replace: 'ENVIRONMENT=PRODUCTION',
+          }
         }
       ],
     },
@@ -70,7 +64,7 @@ module.exports = [
     plugins: [
       new webpack.DefinePlugin({
         'process.env': {
-          NODE_ENV: JSON.stringify('production')
+          ENVIRONMENT: JSON.stringify('production')
         }
       }),
       new webpack.optimize.OccurrenceOrderPlugin(),
@@ -108,6 +102,14 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
+        },
+        {
+          test: /\.env$/,
+          loader: 'string-replace-loader',
+          options: {
+            search: 'ENVIRONMENT=DEVELOPMENT',
+            replace: 'ENVIRONMENT=PRODUCTION',
+          }
         }
       ],
     },
