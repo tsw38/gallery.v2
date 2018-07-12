@@ -23,7 +23,6 @@ dotenv.config();
 
 var app = express();
 
-const SITE_NAME = process.env.SITE_NAME || path.dirname(__filename).split(path.sep).pop();
 app
 .use(bodyParser.json())
 .use(bodyParser.urlencoded({extended:true}))

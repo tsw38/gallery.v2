@@ -36,6 +36,7 @@ class About extends React.Component {
   }
 
   async componentDidMount(){
+    console.log(Variables, 3);
     await this.props.actions.GlobalActions.page.render(this.props, 'about');
   }
 
