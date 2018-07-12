@@ -12,7 +12,7 @@ class Gallery extends React.Component{
   constructor(props){
     super(props);
     const { state, actions } = this.props;
-    
+
     this.state = state.gallery ? {
       ...state.gallery,
       render: false
@@ -23,10 +23,10 @@ class Gallery extends React.Component{
     const {
       getParentState
     } = nextProps;
-    
+
     const parentState = await getParentState('gallery');
-    
-    
+
+
     const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
     if(stateChanged){
       this.setState({
@@ -34,7 +34,7 @@ class Gallery extends React.Component{
         ...parentState
       });
     }
-    
+
     console.log(this.state, 5);
     console.log('-');
     console.log(parentState, 5);
@@ -49,16 +49,18 @@ class Gallery extends React.Component{
     } = this.props;
 
     const parentState = await getParentState('gallery');
-    const albumName   = (parentState) ? parentState.albumName : '';
+    const albumName   = (parentState) ? parentState.albumName : this.state.albumName;
     console.log(`ALBUM NAME FROM PROVIDER ${albumName}`, 8);
     console.log(ObjectUtil.deepFind(parentState, `${albumName}`), 8);
 
-    if (!this.state[this.state.albumName] && !ObjectUtil.deepFind(parentState, this.state.albumName)) {
-      const images = await actions.ArchiveActions.gallery.getGallery(this.state.albumName);
+
+
+    if (!ObjectUtil.deepFind(parentState, `${albumName}`)) {
+      const images = await actions.ArchiveActions.gallery.getGallery(albumName);
       console.log(images, 1);
       this.setState({
         ...this.state,
-        [this.state.albumName]: {
+        [albumName]: {
           images
         },
       }, async () => {
@@ -78,13 +80,13 @@ class Gallery extends React.Component{
       }, 100);
     }
     console.log('MOUNT STATE', this.state);
-    
-    
+
+
     console.log("COMPONENTDIDMOUNT", 1);
   }
 
   async componentWillUnmount() {
-    
+
     const {
       stateUpdater,
       actions
@@ -102,7 +104,7 @@ class Gallery extends React.Component{
 
   generateFirstImage() {
     const {albumName} = this.state;
-    
+
     const firstImage = this.state[albumName] && this.state[albumName].images[0];
     return firstImage && (
       <FirstGalleryImage>
