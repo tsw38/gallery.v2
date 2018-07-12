@@ -26,7 +26,6 @@ class Gallery extends React.Component{
 
     const parentState = await getParentState('gallery');
 
-
     const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
     if(stateChanged){
       this.setState({
@@ -34,11 +33,6 @@ class Gallery extends React.Component{
         ...parentState
       });
     }
-
-    console.log(this.state, 5);
-    console.log('-');
-    console.log(parentState, 5);
-    console.log('COMPONENTWILLRECEIVEPROPS', 5);
   }
 
   async componentDidMount() {
@@ -50,14 +44,10 @@ class Gallery extends React.Component{
 
     const parentState = await getParentState('gallery');
     const albumName   = (parentState) ? parentState.albumName : this.state.albumName;
-    console.log(`ALBUM NAME FROM PROVIDER ${albumName}`, 8);
-    console.log(ObjectUtil.deepFind(parentState, `${albumName}`), 8);
-
 
 
     if (!ObjectUtil.deepFind(parentState, `${albumName}`)) {
       const images = await actions.ArchiveActions.gallery.getGallery(albumName);
-      console.log(images, 1);
       this.setState({
         ...this.state,
         [albumName]: {
@@ -79,10 +69,6 @@ class Gallery extends React.Component{
         });
       }, 100);
     }
-    console.log('MOUNT STATE', this.state);
-
-
-    console.log("COMPONENTDIDMOUNT", 1);
   }
 
   async componentWillUnmount() {
@@ -98,7 +84,6 @@ class Gallery extends React.Component{
       render: false
     });
 
-    console.log("COMPONENTDISMOUNTING", 3);
     await actions.GlobalActions.page.hide(this.props, 'gallery');
   }
 

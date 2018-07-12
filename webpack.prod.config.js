@@ -56,7 +56,7 @@ module.exports = [
     plugins: [
       new webpack.optimize.OccurrenceOrderPlugin(),
       new dotenv_webpack({
-        path: './.env_prod',
+        path: './.env.prod',
         safe:true
       })
     ]
@@ -87,7 +87,7 @@ module.exports = [
     },
     plugins: [
       new dotenv_webpack({
-        path: './.env_prod',
+        path: './.env.prod',
         safe: true
       })
     ]
