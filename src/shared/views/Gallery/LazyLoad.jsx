@@ -11,16 +11,15 @@ export default class LazyLoad extends React.Component{
 		super(props);
 		this.lazyRef = React.createRef();
 		this.state = {
-			scrollEvent: "",
-			hidden: true
+			lazyLoad: false
 		}
 	}
-
-	scrollEvent = null;
 
 	componentDidMount(){
 		if (!Viewport.isTopInViewport(this.lazyRef.current)) {
 			this.bindScroll();
+		} else {
+			this.unbindScroll();
 		}
 	}
 
@@ -29,29 +28,46 @@ export default class LazyLoad extends React.Component{
 	}
 
 	bindScroll() {
-		this.scrollEvent = document.querySelector(Variables.scrollMount).addEventListener('scroll', this.debounceHelper());
+		document.querySelector(Variables.scrollMount).addEventListener('scroll', this.scrollDebounce, false);
+		this.setState({
+			lazyLoad: true
+		});
 	}
 
-	debounceHelper(){
-		return debounce(() => {
-			if (Viewport.isTopInViewport(this.lazyRef.current)) {
-				console.log('IN VIEWPORT', this.lazyRef.current);
-				
-			}
-		},250);
+	unbindScroll() {
+		document.querySelector(Variables.scrollMount).removeEventListener('scroll', this.scrollDebounce, false);
+		this.setState({
+			lazyLoad: false
+		});
+	}
+
+	scrollDebounce = debounce(() => {
+		if (Viewport.isTopInViewport(this.lazyRef.current)) {
+			this.unbindScroll();
+		}
+	}, 100);
+
+	componentWillUnmount() {
+		this.setState({
+			lazyLoad: true
+		})
 	}
 	
 
 	render(){
 		return(
 			<LazyLoadComponent
-				innerRef={this.lazyRef}>
+				innerRef={this.lazyRef}
+				lazyLoad={this.state.lazyLoad}>
 				{this.props.children}
 			</LazyLoadComponent>
 		)
 	}
 }
 
-const LazyLoadComponent = styled.div `
-
+const LazyLoadComponent = styled.div`
+	${props => css`
+		opacity: ${props.lazyLoad ? 0 : 1};
+	`}
+	transition: opacity 500ms ease;
 `
