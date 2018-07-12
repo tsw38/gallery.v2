@@ -3686,6 +3686,10 @@ lodash.templatesettings@^4.0.0:
   dependencies:
     lodash._reinterpolate "~3.0.0"
 
+lodash.throttle@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
+
 lodash.union@4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.union/-/lodash.union-4.6.0.tgz#48bb5088409f16f1821666641c44dd1aaae3cd88"
@@ -4670,6 +4674,13 @@ react-is@^16.3.1:
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
+react-lazy-load-image-component@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-lazy-load-image-component/-/react-lazy-load-image-component-1.1.1.tgz#41e10defa52adf7c0ab9212cf0a94d46899ceff4"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.throttle "^4.1.1"
+
 react-router-config@^1.0.0-beta.4:
   version "1.0.0-beta.4"
   resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-1.0.0-beta.4.tgz#d202496dd0eabdf06cf24eb0793031f6891eef01"
@@ -4859,10 +4870,6 @@ repeating@^2.0.0:
 replace-ext@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-0.0.1.tgz#29bbd92078a739f0bcce2b4ee41e837953522924"
-
-replace-string-loader@0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/replace-string-loader/-/replace-string-loader-0.0.7.tgz#2589c0eab6784e1e3c6d55d6779c9df9fc5fdac4"
 
 require-directory@^2.1.1:
   version "2.1.1"
@@ -5241,13 +5248,6 @@ stream-http@^2.7.2:
 stream-shift@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/stream-shift/-/stream-shift-1.0.0.tgz#d5c752825e5367e786f78e18e445ea223a155952"
-
-string-replace-loader@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/string-replace-loader/-/string-replace-loader-2.1.1.tgz#b72e7b57b6ef04efe615aff0ad989b5c14ca63d1"
-  dependencies:
-    loader-utils "^1.1.0"
-    schema-utils "^0.4.5"
 
 string-width@^1.0.1:
   version "1.0.2"

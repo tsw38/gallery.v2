@@ -1,13 +1,12 @@
 const path                    = require('path');
 const webpack                 = require('webpack');
-const WebpackCleanupPlugin    = require('webpack-cleanup-plugin');
 const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
 const dotenv                  = require('dotenv');
 const dotenv_webpack          = require('dotenv-webpack');
 
 dotenv.config();
 
-console.log('this is the origin', process.env);
+// console.log('this is the origin', process.env);
 module.exports = [
   {
     name: 'client',

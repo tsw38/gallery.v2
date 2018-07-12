@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
 
 import { ViewWrapper } from '../index';
+import GalleryImage from './GalleryImage.jsx';
+
 import { Consumer } from '../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../utils';
-
 
 class Gallery extends React.Component{
   constructor(props){
@@ -72,7 +73,6 @@ class Gallery extends React.Component{
   }
 
   async componentWillUnmount() {
-
     const {
       stateUpdater,
       actions
@@ -106,10 +106,9 @@ class Gallery extends React.Component{
     return this.state[albumName] && this.state[albumName].images.map((image, index) => {
       return (
         <GalleryImage
-          backgroundImage={`${Variables.origin}/api/images/${image.url}/${image.photoName}`}
-          key={`${this.props.state.gallery.key}-${index}`}>
-          <img src={`${Variables.origin}/api/images/${image.url}/${image.photoName}`} alt="" />
-        </GalleryImage>
+          key={`${this.props.state.gallery.key}-${index}`}
+          directory={image.url}
+          fileName={image.photoName} />
       )
     });
   }
@@ -141,7 +140,7 @@ export default props => (
 const GalleryWrapper = styled.div`
   width:80vw;
   max-width: 750px;
-  height:100%;
+  height:auto;
   margin: 0 auto;
   padding-top:45px;
 `
@@ -188,31 +187,3 @@ const Subgrid = styled.div`
   grid-template-columns: calc(33% - 10px) 34% calc(33% - 10px);
   width:100%;
 `;
-
-const GalleryImage = styled.div`
-  max-width:100%;
-  position:relative;
-  display: inline-block;
-  height: 100%;
-  max-height:180px;
-  overflow:hidden;
-  ${props => css`
-    background-image: url(${props.backgroundImage});
-    background-size:cover;
-    background-repeat:no-repeat;
-    background-position:center;
-  `}
-
-  img{
-    max-width:100%;
-    height:100%;
-    width:auto;
-    opacity:0;
-  }
-
-  // &:nth-of-type(3n+3){
-  //   margin: 0 3%;
-  // }
-
-
-`
