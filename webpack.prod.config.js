@@ -6,7 +6,7 @@ const dotenv                  = require('dotenv');
 const dotenv_webpack          = require('dotenv-webpack');
 
 dotenv.config();
-
+console.log('this is the origin', process.env);
 module.exports = [
   {
     name: 'client',
