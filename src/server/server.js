@@ -9,6 +9,7 @@ import compression from 'compression';
 import favicon from 'serve-favicon';
 
 import ServerRenderer from './renderer';
+import {Variables} from '../shared/utils';
 
 import {
   imagesEndpoint,
@@ -49,7 +50,8 @@ app
 
 
 app.listen(process.env.HTTP_PORT,'0.0.0.0', () => {
-  let statement = `${SITE_NAME} IS LIVE: http:\/\/localhost:${process.env.HTTP_PORT}\n${SITE_NAME} PID:${process.pid}`;
+  // console.log(Variables);
+  
   console.log(chalk.magenta(`VERSION NUMBER: ${process.env.VERSION_NUMBER}`))
-  console.log(chalk.green(statement));
+  console.log(chalk.green(`${Variables.origin} is live PID:${process.pid}`));
 });

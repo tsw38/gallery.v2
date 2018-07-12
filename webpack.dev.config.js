@@ -27,14 +27,6 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        {
-          test: /\.env$/,
-          loader: 'string-replace-loader',
-          options: {
-            search: 'ENVIRONMENT=PRODUCTION',
-            replace: 'ENVIRONMENT=DEVELOPMENT',
-          }
         }
       ]
     },
@@ -81,14 +73,6 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        {
-          test: /\.env$/,
-          loader: 'string-replace-loader',
-          options: {
-            search: 'ENVIRONMENT=PRODUCTION',
-            replace: 'ENVIRONMENT=DEVELOPMENT',
-          }
         }
       ],
     },

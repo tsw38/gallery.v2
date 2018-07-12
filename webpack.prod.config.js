@@ -25,14 +25,6 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        {
-          test: /\.env$/,
-          loader: 'string-replace-loader',
-          options: {
-            search: 'ENVIRONMENT=DEVELOPMENT',
-            replace: 'ENVIRONMENT=PRODUCTION',
-          }
         }
       ],
     },
@@ -62,21 +54,9 @@ module.exports = [
       ]
     },
     plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          ENVIRONMENT: JSON.stringify('production')
-        }
-      }),
       new webpack.optimize.OccurrenceOrderPlugin(),
-      // new webpack.ProvidePlugin({
-      //   $:'jquery',
-      //   jQuery:'jquery',
-      //   'window.jQuery':'jquery',
-      //   'jQueryBridget':'jQueryBridget',
-      //   'Masonry':'Masonry'
-      // }),
       new dotenv_webpack({
-        path: './.env',
+        path: './.env_prod',
         safe:true
       })
     ]
@@ -102,18 +82,14 @@ module.exports = [
           test: /\.jsx?$/,
           exclude: /(node_modules\/)/,
           loader: 'babel-loader'
-        },
-        {
-          test: /\.env$/,
-          loader: 'string-replace-loader',
-          options: {
-            search: 'ENVIRONMENT=DEVELOPMENT',
-            replace: 'ENVIRONMENT=PRODUCTION',
-          }
         }
       ],
     },
     plugins: [
+      new dotenv_webpack({
+        path: './.env_prod',
+        safe: true
+      })
     ]
   }
 ];

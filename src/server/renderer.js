@@ -6,6 +6,7 @@ import { matchRoutes } from 'react-router-config';
 import { Helmet } from 'react-helmet';
 import cheerio from 'cheerio';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+import chalk from 'chalk';
 
 import { App } from '../shared/components';
 
@@ -29,14 +30,16 @@ const asyncMatchRoute = async (routes,location) => {
     })
     .slice(-1);
 
+  console.log(chalk.green('MATCHED!!!!!'), matchedRoute);
+
   if(matchedRoute){
     try{
       generatedHTML = await renderHTML({routes, location, matchedRoute})
     } catch (err) {
       generatedHTML = "404";
-      console.error(`\n\n<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>`)
-      console.error(err);
-      console.error(`<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>\n\n`)
+      console.error(chalk.red(`\n\n<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>`))
+      console.error(err.code, `${err.syscall} ${err.address}`);
+      console.error(chalk.red(`<<<<<< ERROR GENERATING HTML: ${location} >>>>>>>>\n\n`))
     }
   }
   return generatedHTML;
