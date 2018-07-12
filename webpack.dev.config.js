@@ -1,7 +1,6 @@
 const path                    = require('path');
 const webpack                 = require('webpack');
 const WebpackCleanupPlugin    = require('webpack-cleanup-plugin');
-const ExtractTextPlugin       = require('extract-text-webpack-plugin');
 const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
 const dotenv                  = require('dotenv');
 const dotenv_webpack          = require('dotenv-webpack');
