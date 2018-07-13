@@ -17,7 +17,9 @@ class Gallery extends React.Component{
 
     this.state = state.gallery ? {
       ...state.gallery,
-      render: false
+      render: false,
+      activeLightbox:false,
+      activeIndex: -1
     } : actions.ArchiveActions.stateManager.initGalleryState()
   }
 
@@ -82,31 +84,31 @@ class Gallery extends React.Component{
     await stateUpdater('gallery', {
       ...this.state,
       albumName: '',
-      render: false
+      render: false,
+      activeLightbox: false,
+      activeIndex: -1
     });
 
     await actions.GlobalActions.page.hide(this.props, 'gallery');
   }
 
-  generateFirstImage() {
+  imageClickWrapper = (imageIndex) => async () => {
+    const {actions, stateUpdater, getParentState} = this.props;
+    const { gallery } = actions.ArchiveActions;
 
-    return firstImage && (
-      <FirstGalleryImage>
-        <img src={`${Variables.origin}/api/images/${firstImage.url}/${firstImage.photoName}`} alt="" />
-        <Overlay>
-          <span>{firstImage.albumName}</span>
-        </Overlay>
-      </FirstGalleryImage>
-    )
+    gallery.handleImageClick(imageIndex, this.props);
   }
 
   generateGallery() {
     const {albumName} = this.state;
+    const { ArchiveActions } = this.props.actions;
+
     return this.state[albumName] && this.state[albumName].images.map((image, index) => {
       return (
         <GalleryImage
           key={`${this.props.state.gallery.key}-${index}`}
           directory={image.url}
+          onClick={this.imageClickWrapper(index)}
           fileName={image.photoName} />
       )
     });

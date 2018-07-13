@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Header,
-  Footer
+  Footer,
+  Lightbox
 } from '../components';
 
 import styled, { css } from 'styled-components';
@@ -18,6 +19,7 @@ export default class ViewWrapper extends React.Component {
           </PageContainer>
         </Page>
         <Footer />
+        <Lightbox />
       </React.Fragment>
     )
   }

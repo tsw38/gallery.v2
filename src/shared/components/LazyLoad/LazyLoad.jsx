@@ -15,12 +15,18 @@ export default class LazyLoad extends React.Component{
 	}
 
 	componentDidMount(){
-		if (!Viewport.isTopInViewport(this.lazyRef.current)) {
-			this.bindScroll();
-		} else {
-			this.unbindScroll();
-			this.loadImage(this.props.src);
-		}
+    if(this.props.bypassViewport){
+      // console.warn('bypassing viewport check');
+      this.loadImage(this.props.src);
+    } else {
+      if (!Viewport.isTopInViewport(this.lazyRef.current)) {
+  			this.bindScroll();
+  		} else {
+  			this.unbindScroll();
+  			this.loadImage(this.props.src);
+  		}
+    }
+
 	}
 
 	bindScroll() {
@@ -46,6 +52,7 @@ export default class LazyLoad extends React.Component{
 	}, 100);
 
 	loadImage = (src) => {
+    // console.warn('lazy load working overtime', src);
 		const img = new Image();
 		img.src = src || this.props.src;
 	  img.onload = () => {

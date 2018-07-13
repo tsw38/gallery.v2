@@ -13,7 +13,8 @@ export default class GalleryImage extends React.Component{
 				src={photoUrl}
 				scrollListener={'.gallery'}>
 				<GalleryImageComponent
-					backgroundImage={photoUrl}>
+					backgroundImage={photoUrl}
+					onClick={this.props.onClick}>
 					<img src={photoUrl} />
 				</GalleryImageComponent>
 			</LazyLoad>
