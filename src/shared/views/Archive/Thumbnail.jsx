@@ -20,10 +20,11 @@ export default class Thumbnail extends React.Component{
 			photoName
 		} = this.props;
 
+		const image = `${Variables.origin}/api/images/${url}/${photoName}`;
 		return (
-			<StyledLink to={`${url}`} onClick={this.props.onClick}>
+			<StyledLink to={url} onClick={this.props.onClick}>
 				<ThumbFigure>
-					<ThumbImage src={`${Variables.origin}/api/images/${url}/${photoName}`} alt={`${photoName}`} />
+					<ThumbImage src={image} alt={photoName} />
 					<HoverText>
 						<span>{albumName}</span>
 					</HoverText>
