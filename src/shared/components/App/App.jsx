@@ -5,7 +5,8 @@ import { injectGlobal } from 'styled-components';
 
 import {
   Variables,
-  Console
+  Console,
+  currentFontSize
 } from '../../utils';
 
 import {
@@ -21,6 +22,7 @@ import {
 } from '../../context/Context.jsx';
 
 Console();
+
 
 export default class App extends React.Component {
   render(){

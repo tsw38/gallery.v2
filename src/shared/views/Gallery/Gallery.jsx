@@ -151,10 +151,20 @@ const FirstGalleryImage = styled.figure`
   position:relative;
   margin-bottom:10px;
   overflow:hidden;
+  transition: max-height 500ms ease;
 
   img{
     max-width:inherit;
     filter: blur(2px);
+    transition: filter 500ms ease;
+  }
+
+  @media only screen and (max-width:500px){
+    max-height:75px;
+
+    img{
+      filter: blur(4px);
+    }
   }
 `;
 
@@ -166,6 +176,7 @@ const Overlay = styled.figcaption`
   bottom:0;
   background-color: rgba(0,0,0, 0.5);
   overflow:hidden;
+  transition: background-color 500ms ease;
 
   span{
 		height:100%;
@@ -177,8 +188,16 @@ const Overlay = styled.figcaption`
 		color: white;
 		font-size: 30px;
     letter-spacing:3px;
+    text-align:center;
   }
 
+  @media only screen and (max-width:500px){
+    background-color: rgba(0,0,0, 0.75);
+
+    span{
+      font-size: 20px;
+    }
+  }
 `
 
 const Subgrid = styled.div`
@@ -186,4 +205,12 @@ const Subgrid = styled.div`
   grid-gap: 10px;
   grid-template-columns: calc(33% - 10px) 34% calc(33% - 10px);
   width:100%;
+
+  @media only screen and (max-width:800px){
+    grid-template-columns: calc(50% - 5px) calc(50% - 5px);
+  }
+
+  @media only screen and (max-width:500px){
+    grid-template-columns: 100%;
+  }
 `;

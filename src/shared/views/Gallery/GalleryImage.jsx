@@ -28,6 +28,8 @@ const GalleryImageComponent = styled.div`
 	height: 100%;
 	max-height:180px;
 	overflow:hidden;
+	transition: max-height 500ms ease;
+
 	${props => css`
 		background-image: url(${props.backgroundImage});
 		background-size:cover;
@@ -37,5 +39,9 @@ const GalleryImageComponent = styled.div`
 
 	img{
 		opacity: 0;
+	}
+
+	@media only screen and (max-width:500px){
+		max-height:250px;
 	}
 `

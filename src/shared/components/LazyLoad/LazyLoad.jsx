@@ -11,6 +11,7 @@ export default class LazyLoad extends React.Component{
 		this.state = {
 			lazyLoaded: false
 		}
+    this.loadImage = this.loadImage.bind(this);
 	}
 
 	componentDidMount(){
@@ -38,24 +39,19 @@ export default class LazyLoad extends React.Component{
 		this.unbindScroll();
 	}
 
-
 	scrollDebounce = debounce(() => {
 		if (Viewport.isTopInViewport(this.lazyRef.current)) {
 			this.loadImage(this.props.src);
 		}
 	}, 100);
 
-	loadImage = (src, callback = () => {}) => {
+	loadImage = (src) => {
 		const img = new Image();
 		img.src = src || this.props.src;
-		img.onload = () => {
-			setTimeout(() => {
-				this.setState({
-					lazyLoaded: true
-				}, () => {
-					callback();
-				})
-			}, 200);
+	  img.onload = () => {
+			this.setState({
+				lazyLoaded: true
+			})
 		};
 	}
 

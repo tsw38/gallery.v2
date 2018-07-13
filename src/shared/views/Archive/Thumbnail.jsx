@@ -69,10 +69,12 @@ const HoverText = styled.figcaption`
 		font-size: 20px;
 		transition: color 500ms ease, transform 500ms ease, background-color 500ms ease;
 
-		${ThumbFigure}:hover & {
-			background-color: rgba(255, 255, 255, 0.75);
-			transform: scale(0.9);
-			color: ${Variables.textBlack};
+		@media (hover: hover) {
+			${ThumbFigure}:hover & {
+				background-color: rgba(255, 255, 255, 0.75);
+				transform: scale(0.9);
+				color: ${Variables.textBlack};
+			}
 		}
 	}
 `

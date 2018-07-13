@@ -115,4 +115,12 @@ const GridWrapper = styled.div`
   grid-template-columns: auto auto auto;
   width:100%;
   height:100%;
+
+  @media only screen and (max-width:800px){
+    grid-template-columns: auto auto;
+  }
+
+  @media only screen and (max-width:500px){
+    grid-template-columns: auto;
+  }
 `

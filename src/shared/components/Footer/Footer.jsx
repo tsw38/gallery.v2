@@ -37,9 +37,11 @@ const StyledLink = styled(Link)`
   height:100%;
   padding:5px;
 
-  &:hover{
-    svg{
-      fill:${Variables.backgroundState};
+  @media (hover: hover) {
+    &:hover{
+      svg{
+        fill:${Variables.backgroundState};
+      }
     }
   }
 `;

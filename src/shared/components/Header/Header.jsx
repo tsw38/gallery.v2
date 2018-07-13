@@ -86,9 +86,11 @@ const StyledLink = styled(Link)`
   padding:15px;
   transition:color 500ms ease, background-color 500ms ease;
 
-  &:hover{
-    color:${Variables.backgroundState};
-    background-color:${Variables.textBlack};
+  @media (hover: hover) {
+    &:hover{
+      color:${Variables.backgroundState};
+      background-color:${Variables.textBlack};
+    }
   }
 `;
 
@@ -105,18 +107,22 @@ const ListElement = styled.li`
   min-width: 45px;
   background-color: ${Variables.backgroundState};
   transition: background-color 500ms ease;
-  &:hover{
-    background-color: ${Variables.textBlack};
-    transition: color 500ms ease,background-color 500ms ease;
 
-    a{
-      color: ${Variables.backgroundState};
+  @media (hover: hover) {
+    &:hover{
+      background-color: ${Variables.textBlack};
+      transition: color 500ms ease,background-color 500ms ease;
 
-      .gridWrapper .row .cell{
-        background-color: ${Variables.backgroundState};
+      a{
+        color: ${Variables.backgroundState};
+
+        .gridWrapper .row .cell{
+          background-color: ${Variables.backgroundState};
+        }
       }
     }
   }
+
 
   a{
     display: block;
