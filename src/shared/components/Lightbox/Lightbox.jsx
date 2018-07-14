@@ -28,6 +28,7 @@ class Lightbox extends React.Component{
     const activeAlbum = ObjectUtil.deepFind(parentState, 'albumName');
 
     if (ObjectUtil.deepFind(parentState, 'render') && ObjectUtil.deepFind(parentState, 'activeLightbox')) {
+      await this.handleKeypress();
       if(this.state.albumName !== parentState.albumName){
         // console.warn('update albumName!!!!!!');
         this.setState({
@@ -57,15 +58,51 @@ class Lightbox extends React.Component{
     }
   }
 
-	componentDidMount(){
+	async componentDidMount(){
 
-    // const onGalleryPage = !!ObjectUtil.deepFind(this.props.state, 'gallery.render');
-
-    // console.log(this.props.state, 2);
 	}
 
 	componentWillUnmount() {
+    this.unhandleKeypress();
 	}
+
+  async handleKeypress(){
+    if(!global.window) return;
+    document.addEventListener('keyup', this.navigateNextImage);
+  }
+
+  async unhandleKeypress(){
+    if(!global.window) return;
+    document.removeEventListener('keyup', this.navigateNextImage);
+  }
+
+  navigateNextImage = (e) => {
+    let {
+      imageList,
+      activeIndex
+    } = this.state;
+
+    const numOfImages = imageList.length;
+
+    switch(e.keyCode){
+      case 37:
+        activeIndex = (activeIndex === 0) ? numOfImages-1 : --this.state.activeIndex;
+        break;
+      case 39:
+        activeIndex = (activeIndex+1 === numOfImages) ? 0 : ++this.state.activeIndex;
+        break;
+      case 27:
+        this.handleCanvasClose({target: {className:this.canvasWrapperRef.current.className}});
+        break;
+      default:
+        break;
+    }
+
+    this.setState({
+      ...this.state,
+      activeIndex
+    })
+  }
 
   handleCanvasClose = async(e) => {
     if(e.target.className === this.canvasWrapperRef.current.className){
@@ -73,6 +110,8 @@ class Lightbox extends React.Component{
         activeLightbox: false
       }, () => {
         setTimeout(()=> {
+          this.unhandleKeypress();
+
           this.setState({
             activeIndex: -1
           }, async () => {
@@ -155,7 +194,7 @@ const Canvas = styled.div`
   min-height: 1px;
   min-width:1px;
   z-index: 2010;
-  transition:all 1s ease 500ms;
+  transition:max-height 1000ms ease 500ms, max-width 1000ms ease 500ms, background-image 500ms ease;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=);
   background-repeat:no-repeat;
   background-position:center;

@@ -13,10 +13,7 @@ async function getGallery(galleryId) {
 }
 
 async function handleImageClick(imageIndex, props) {
-  console.log('you clicked on me!!!!!', imageIndex, 2);
   const galleryState= await props.getParentState('gallery');
-
-  console.warn('galleryState', galleryState);
   await props.stateUpdater('gallery', {
     ...galleryState,
     activeLightbox: true,

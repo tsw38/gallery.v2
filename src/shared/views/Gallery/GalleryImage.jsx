@@ -12,25 +12,33 @@ export default class GalleryImage extends React.Component{
 			<LazyLoad
 				src={photoUrl}
 				scrollListener={'.gallery'}>
-				<GalleryImageComponent
-					backgroundImage={photoUrl}
-					onClick={this.props.onClick}>
-					<img src={photoUrl} />
-				</GalleryImageComponent>
+				<ZoomWrapper>
+					<GalleryImageComponent
+						backgroundImage={photoUrl}
+						onClick={this.props.onClick}>
+						<img src={photoUrl} />
+					</GalleryImageComponent>
+				</ZoomWrapper>
 			</LazyLoad>
 		)
 	}
 }
 
-const GalleryImageComponent = styled.div`
+const ZoomWrapper = styled.div`
 	max-width:100%;
 	position:relative;
 	display: inline-block;
 	height: 100%;
 	max-height:180px;
 	overflow:hidden;
-	transition: max-height 500ms ease;
 
+	cursor: pointer;
+`
+
+const GalleryImageComponent = styled.div`
+	height: 100%;
+	max-height:180px;
+	transition: max-height 500ms ease, transform 200ms ease-in-out;
 	${props => css`
 		background-image: url(${props.backgroundImage});
 		background-size:cover;
@@ -40,6 +48,12 @@ const GalleryImageComponent = styled.div`
 
 	img{
 		opacity: 0;
+	}
+
+	@media (hover: hover) {
+		${ZoomWrapper}:hover & {
+			transform: scale(1.1);
+		}
 	}
 
 	@media only screen and (max-width:500px){
