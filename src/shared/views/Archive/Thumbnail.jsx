@@ -23,12 +23,13 @@ export default class Thumbnail extends React.Component{
 		const image = `${Variables.origin}/api/images/${url}/${photoName}`;
 		return (
 			<StyledLink to={url} onClick={this.props.onClick}>
-				<ThumbFigure>
+				<ThumbnailWrapper
+					image={image}>
 					<ThumbImage src={image} alt={photoName} />
 					<HoverText>
 						<span>{albumName}</span>
 					</HoverText>
-				</ThumbFigure>
+				</ThumbnailWrapper>
 			</StyledLink>
 		)
 	}
@@ -38,17 +39,26 @@ const StyledLink = styled(Link)`
 	display:inline-block;
 `
 
-const ThumbFigure = styled.figure`
+const ThumbnailWrapper = styled.div`
 	display:inline-block;
 	position:relative;
+	max-height: 224px;
+	height:100%;
+	overflow:hidden;
+	background-image: url(${props => props.image || ''});
+	background-repeat: no-repeat;
+	background-size:cover;
+	background-position:top center;
+
 `
 
 const ThumbImage = styled.img`
 	width:100%;
 	vertical-align:middle;
+	opacity:0;
 `
 
-const HoverText = styled.figcaption`
+const HoverText = styled.div`
 	position:absolute;
 	top:0;
 	left:0;
@@ -56,6 +66,7 @@ const HoverText = styled.figcaption`
 	bottom:0;
 
 	span{
+		position:relative;
 		display:block;
 		height:100%;
 		width:100%;
@@ -70,7 +81,7 @@ const HoverText = styled.figcaption`
 		transition: color 500ms ease, transform 500ms ease, background-color 500ms ease;
 
 		@media (hover: hover) {
-			${ThumbFigure}:hover & {
+			${ThumbnailWrapper}:hover & {
 				background-color: rgba(255, 255, 255, 0.75);
 				transform: scale(0.9);
 				color: ${Variables.textBlack};

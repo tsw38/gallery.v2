@@ -58,20 +58,16 @@ class Lightbox extends React.Component{
     }
   }
 
-	async componentDidMount(){
-
-	}
-
 	componentWillUnmount() {
     this.unhandleKeypress();
 	}
 
-  async handleKeypress(){
+  handleKeypress(){
     if(!global.window) return;
     document.addEventListener('keyup', this.navigateNextImage);
   }
 
-  async unhandleKeypress(){
+  unhandleKeypress(){
     if(!global.window) return;
     document.removeEventListener('keyup', this.navigateNextImage);
   }
@@ -202,12 +198,13 @@ const CanvasWrapper = styled.div`
 
 const Canvas = styled.div`
   position:relative;
-  max-height: 80%;
+  min-height: 75vh;
+  max-height:75vh;
+  height:75vh;
   max-width: 75%;
-  min-height: 1px;
   min-width:1px;
   z-index: 2010;
-  transition:max-height 1000ms ease 500ms, max-width 1000ms ease 500ms, background-image 500ms ease;
+  transition:background-image 500ms ease;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=);
   background-repeat:no-repeat;
   background-position:center;
