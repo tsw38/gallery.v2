@@ -104,6 +104,8 @@ class Lightbox extends React.Component{
     })
   }
 
+  handleArrowClick = (keyCode) => () => this.navigateNextImage({keyCode});
+
   handleCanvasClose = async(e) => {
     if(e.target.className === this.canvasWrapperRef.current.className){
       this.setState({
@@ -138,9 +140,19 @@ class Lightbox extends React.Component{
             <Canvas
               activeLightbox={this.state.activeLightbox}
               image={activeImageUrl}>
-              <FittedImage
-                src={activeImageUrl}
-              />
+              <ArrowWrapperLeft
+                onClick={this.handleArrowClick(37)}>
+                <ArrowWrapperInner>
+                  <Arrow/>
+                </ArrowWrapperInner>
+              </ArrowWrapperLeft>
+              <FittedImage src={activeImageUrl}s/>
+              <ArrowWrapperRight
+                onClick={this.handleArrowClick(39)}>
+                <ArrowWrapperInner>
+                  <Arrow/>
+                </ArrowWrapperInner>
+              </ArrowWrapperRight>
             </Canvas>
           </CanvasWrapper>
       </LightboxBackground>
@@ -189,6 +201,7 @@ const CanvasWrapper = styled.div`
 `
 
 const Canvas = styled.div`
+  position:relative;
   max-height: 80%;
   max-width: 75%;
   min-height: 1px;
@@ -207,6 +220,46 @@ const Canvas = styled.div`
     background-image:url("${props.image}");
   `}
 `;
+const ArrowWrapper = styled.div`
+  position: absolute;
+  height:100%;
+  width: 15%;
+  bottom: 0;
+`;
+
+const ArrowWrapperLeft = ArrowWrapper.extend`
+  left:0;
+  transform-origin: 50% 50%;
+  transform: rotate(180deg);
+`;
+const ArrowWrapperRight = ArrowWrapper.extend`
+  right:0;
+`;
+
+const ArrowWrapperInner = styled.div`
+  height:100%;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+`;
+
+const Arrow = styled.div`
+  max-height: 300px;
+  height:8vw;
+  width: 100%;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACg0lEQVR42u3dwWrUYBTF8ZAR6fOVUrCLLrrowoULVy7cSREREREREREpRURFSunT5Z4bNw2MYLmjyXfPnen5PUDJd/90kpnJfOk6IgD7Znbp7nvM47iTABy6+zCO4wjg2t3vs4/pzgBwNA1/YmZXipAAwLG7Y/wLRWjMzE5uG/5ahEtFaADAaTT8CQBFWJKZPdx0+IqwMACP3P1fZr8e4ZcizGBmj/93+IowE4Anc4e/FuGnu99jr2lrmNnTpYY/MTNF2ASAZ4tO/s8I33ctQr8lf7Pruq5brVYHAL7uWoTFAThr9V9wc074pggBRShAEQpIiKBzQiQhwoUiBFpHMLMLd292BbYTEiKcK0JAEQpIiPBFEQIJJ2ZFiChCAQkRPitCICHCJ0UIJJyYFSGSEOGjIgQSInxQhEDrCMMwKEIk4cT8XhECilCAIhSQEOEde43lJVwdvWWvsTxFKCAhwhv2GstLeJ/wmr3G8hL+ExQhknB1pAiRhAiv2GssTxEKSDgnvGSvsbyECC/YayxPEQpIiPCcvcbyEt6snbHXWF7C1dHsCPocXNrQSxCRTsJEugwl0vCJ9FEEkT6MI9LwifSFDJG+kiTSl/JEui2FSDdmEWn4RLo5l0i3pxNp+EQaPpF+pEekn6kS6YfaRNqqgEibdRBpuxoibdhEpOETadM+Im1bSaThE2nrYiJt3k2k7euJ9AAHIg2fSMMnSrja2alnibW4bPNWBwvgR9/3D/q+t4Yz2X56lGEBephnAXqcbQEzH+isp2ovQY80LwDA6aYR3F3Db8HMTqIIZqbhtwTg+LYIZnal4ScAcOTug4ZPBOBwigDgWsMnALB/85q/xz4Wlt9+Ci7zZE+0dQAAAABJRU5ErkJggg==');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position:center;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  ${ArrowWrapperInner}:hover & {
+    opacity: 1;
+  }
+`;
+
 
 const FittedImage = styled.img`
   max-width:100%;

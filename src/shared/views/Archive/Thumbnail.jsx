@@ -82,6 +82,7 @@ const HoverText = styled.figcaption`
 		top:initial;
 		left: initial;
 		height: 20px;
+		right: -2px;
 		bottom: -1px;
 
 		span{
