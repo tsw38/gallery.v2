@@ -77,4 +77,25 @@ const HoverText = styled.figcaption`
 			}
 		}
 	}
+
+	@media only screen and (max-width: 800px){
+		top:initial;
+		left: initial;
+		height: 20px;
+		bottom: -1px;
+
+		span{
+			display:inline;
+			font-size:14px;
+			background-color: rgba(255, 255, 255, 1);
+			margin: 0 0 0 auto;
+			text-align: center;
+			vertical-align:middle;
+			max-width:56%;
+			max-height:20px;
+			padding:2px 10px;
+			color: ${Variables.textBlack};
+		}
+
+	}
 `

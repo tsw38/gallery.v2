@@ -31,13 +31,16 @@ const ZoomWrapper = styled.div`
 	height: 100%;
 	max-height:180px;
 	overflow:hidden;
-
 	cursor: pointer;
+
+	@media only screen and (max-width:500px){
+		max-height:250px;
+	}
 `
 
 const GalleryImageComponent = styled.div`
 	height: 100%;
-	max-height:180px;
+	max-height:inherit;
 	transition: max-height 500ms ease, transform 200ms ease-in-out;
 	${props => css`
 		background-image: url(${props.backgroundImage});
@@ -54,9 +57,5 @@ const GalleryImageComponent = styled.div`
 		${ZoomWrapper}:hover & {
 			transform: scale(1.1);
 		}
-	}
-
-	@media only screen and (max-width:500px){
-		max-height:250px;
 	}
 `

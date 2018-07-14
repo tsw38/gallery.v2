@@ -92,7 +92,7 @@ class Lightbox extends React.Component{
         activeIndex = (activeIndex+1 === numOfImages) ? 0 : ++this.state.activeIndex;
         break;
       case 27:
-        this.handleCanvasClose({target: {className:this.canvasWrapperRef.current.className}});
+        this.handleCanvasClose({target: this.canvasWrapperRef.current});
         break;
       default:
         break;
