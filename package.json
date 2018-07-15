@@ -8,7 +8,8 @@
     "clean:prod": "ls -t build/ | rm -rf build/$(head -1)",
     "dev:build": "npm run clean:dev && webpack --config webpack.dev.config.js -d --watch",
     "dev:watch": "gulp dev:watch",
-    "prod:build": "npm run clean:prod && webpack --config webpack.prod.config.js"
+    "prod:build": "npm run clean:prod && webpack --config webpack.prod.config.js",
+    "lazyCommit": "gulp lazy"
   },
   "author": "",
   "license": "ISC",
