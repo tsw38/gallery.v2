@@ -18,7 +18,6 @@ module.exports = [
       publicPath: '/build/',
     },
     mode: 'production',
-    devtool: 'source-map',
     module: {
       rules: [
         {
@@ -75,7 +74,6 @@ module.exports = [
       publicPath: '/build/',
     },
     mode: 'development',
-    devtool: 'source-map',
     module: {
       rules: [
         {
