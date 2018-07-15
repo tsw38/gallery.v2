@@ -14,16 +14,16 @@ export default class LazyLoad extends React.Component{
     this.loadImage = this.loadImage.bind(this);
 	}
 
-	componentDidMount(){
+	async componentDidMount(){
     if(this.props.bypassViewport){
       // console.warn('bypassing viewport check');
-      this.loadImage(this.props.src);
+      this.loadImage(this.props['data-src']);
     } else {
       if (!Viewport.isTopInViewport(this.lazyRef.current)) {
   			this.bindScroll();
   		} else {
   			this.unbindScroll();
-  			this.loadImage(this.props.src);
+  			this.loadImage(this.props['data-src']);
   		}
     }
 
@@ -47,14 +47,14 @@ export default class LazyLoad extends React.Component{
 
 	scrollDebounce = debounce(() => {
 		if (Viewport.isTopInViewport(this.lazyRef.current)) {
-			this.loadImage(this.props.src);
+			this.loadImage(this.props['data-src']);
 		}
 	}, 100);
 
 	loadImage = (src) => {
     // console.warn('lazy load working overtime', src);
 		const img = new Image();
-		img.src = src || this.props.src;
+		img.src = src || this.props['data-src'];
 	  img.onload = () => {
 			this.setState({
 				lazyLoaded: true
@@ -65,6 +65,7 @@ export default class LazyLoad extends React.Component{
 	render(){
 		return(
 			<LazyLoadComponent
+        data-src={this.props['data-src']}
 				innerRef={this.lazyRef}
 				lazyLoaded={this.state.lazyLoaded}>
 					{this.props.children}
@@ -74,8 +75,15 @@ export default class LazyLoad extends React.Component{
 }
 
 const LazyLoadComponent = styled.div`
-	${props => css`
-		opacity: ${props.lazyLoaded ? 1 : 0};
-	`}
-	transition: opacity 500ms ease;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=);
+background-size:cover;
+background-repeat:no-repeat;
+background-position:top center;
+transition: opacity 500ms ease;
+opacity:0;
+
+${props => props.lazyLoaded && css`
+	opacity: 1;
+  background-image: url(${props['data-src']});
+`}
 `

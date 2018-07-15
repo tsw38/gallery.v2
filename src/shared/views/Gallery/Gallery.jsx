@@ -116,8 +116,7 @@ class Gallery extends React.Component{
 
   render(){
     const {albumName} = this.state;
-    const firstImage = this.state[albumName] && this.state[albumName].images[0];
-
+    const firstImage = this.state[albumName] && this.state[albumName].images.find(image => image.isThumbnail);
 
     return (
       <ViewWrapper page="gallery"

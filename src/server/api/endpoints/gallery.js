@@ -8,7 +8,16 @@ export default async (req,res,next) => {
       database:process.env.DB_NAME
     });
 
-    mysql_conn.query(`select albumName, url, photoName from albums RIGHT OUTER JOIN photos on photos.albumID = albums.id HAVING albums.url="${req.params.gallery}" ORDER BY timestamp desc;`, (err,rows) => {
+    mysql_conn.query(
+      `SELECT
+        albumName,
+        url,
+        photoName,
+        CASE WHEN thumbnailID = photoID THEN true ELSE false END as 'isThumbnail'
+      FROM
+        photos AS P
+        JOIN albums AS A on P.albumID = A.id
+      WHERE A.url="${req.params.gallery}" ORDER BY timestamp desc;`, (err,rows) => {
       if(err){
         if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
       } else {

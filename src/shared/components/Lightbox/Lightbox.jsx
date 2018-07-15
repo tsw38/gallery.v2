@@ -126,7 +126,7 @@ class Lightbox extends React.Component{
 	render(){
     const activeImage = this.state.activeIndex >= 0 ? this.state.imageList[this.state.activeIndex] : undefined;
     const activeImageUrl = activeImage && `${Variables.origin}/api/images/${activeImage.url}/${activeImage.photoName}`;
-    // console.warn();
+
 		return(
 			<LightboxBackground
         activeLightbox={this.state.activeLightbox}>
@@ -220,7 +220,7 @@ const Canvas = styled.div`
 const ArrowWrapper = styled.div`
   position: absolute;
   height:100%;
-  width: 15%;
+  width: 14%;
   bottom: 0;
 `;
 
@@ -244,7 +244,8 @@ const ArrowWrapperInner = styled.div`
 
 const Arrow = styled.div`
   max-height: 300px;
-  height:8vw;
+  height:5vw;
+  min-height:50px;
   width: 100%;
   background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACg0lEQVR42u3dwWrUYBTF8ZAR6fOVUrCLLrrowoULVy7cSREREREREREpRURFSunT5Z4bNw2MYLmjyXfPnen5PUDJd/90kpnJfOk6IgD7Znbp7nvM47iTABy6+zCO4wjg2t3vs4/pzgBwNA1/YmZXipAAwLG7Y/wLRWjMzE5uG/5ahEtFaADAaTT8CQBFWJKZPdx0+IqwMACP3P1fZr8e4ZcizGBmj/93+IowE4Anc4e/FuGnu99jr2lrmNnTpYY/MTNF2ASAZ4tO/s8I33ctQr8lf7Pruq5brVYHAL7uWoTFAThr9V9wc074pggBRShAEQpIiKBzQiQhwoUiBFpHMLMLd292BbYTEiKcK0JAEQpIiPBFEQIJJ2ZFiChCAQkRPitCICHCJ0UIJJyYFSGSEOGjIgQSInxQhEDrCMMwKEIk4cT8XhECilCAIhSQEOEde43lJVwdvWWvsTxFKCAhwhv2GstLeJ/wmr3G8hL+ExQhknB1pAiRhAiv2GssTxEKSDgnvGSvsbyECC/YayxPEQpIiPCcvcbyEt6snbHXWF7C1dHsCPocXNrQSxCRTsJEugwl0vCJ9FEEkT6MI9LwifSFDJG+kiTSl/JEui2FSDdmEWn4RLo5l0i3pxNp+EQaPpF+pEekn6kS6YfaRNqqgEibdRBpuxoibdhEpOETadM+Im1bSaThE2nrYiJt3k2k7euJ9AAHIg2fSMMnSrja2alnibW4bPNWBwvgR9/3D/q+t4Yz2X56lGEBephnAXqcbQEzH+isp2ovQY80LwDA6aYR3F3Db8HMTqIIZqbhtwTg+LYIZnal4ScAcOTug4ZPBOBwigDgWsMnALB/85q/xz4Wlt9+Ci7zZE+0dQAAAABJRU5ErkJggg==');
   background-repeat: no-repeat;

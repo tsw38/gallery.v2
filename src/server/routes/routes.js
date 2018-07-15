@@ -42,9 +42,7 @@ const routes = [
           { path: '/archive/:gallery',
             component: Gallery,
             preRender: async (gallery) => {
-              // console.warn('this is the input gallery?', gallery);
               const images = await ArchiveActions.gallery.getGallery(gallery);
-
               return {
                 ...ArchiveActions.stateManager.initGalleryState(),
                 albumName: gallery,
@@ -56,7 +54,6 @@ const routes = [
         ],
         preRender: async () => {
           const gallery = await ArchiveActions.gallery.getThumbnails();
-          // console.log('THIS IS THE GALLERY', gallery);
           return {
             ...ArchiveActions.stateManager.initState(),
             gallery,

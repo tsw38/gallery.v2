@@ -1,6 +1,6 @@
 const render = async (props, page) => {
   setTimeout(async () => {
-    console.warn('RENDER THIS PAGE', page, props);
+    // console.warn('RENDER THIS PAGE', page, props);
     const parentState = props.getParentState(page);
 
     await props.stateUpdater(page, {

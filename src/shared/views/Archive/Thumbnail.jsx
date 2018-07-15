@@ -37,14 +37,20 @@ export default class Thumbnail extends React.Component{
 
 const StyledLink = styled(Link)`
 	display:inline-block;
+  overflow: hidden;
+  height: 25vw;
+
+	@media only screen and (max-width: 500px){
+		height:45vh;
+	}
 `
 
 const ThumbnailWrapper = styled.div`
 	display:inline-block;
 	position:relative;
-	max-height: 224px;
+
 	height:100%;
-	overflow:hidden;
+
 	background-image: url(${props => props.image || ''});
 	background-repeat: no-repeat;
 	background-size:cover;

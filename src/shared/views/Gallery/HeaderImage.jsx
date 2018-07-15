@@ -17,7 +17,7 @@ export default class HeaderImage extends React.Component{
 
 		return(
 			<LazyLoad
-				src={photoUrl}
+				data-src={photoUrl}
 				scrollListener={'.gallery'}>
           <FirstGalleryImage>
             <img src={photoUrl} alt="" />

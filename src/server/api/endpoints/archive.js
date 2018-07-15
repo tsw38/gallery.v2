@@ -8,7 +8,21 @@ export default async (req,res,next) => {
       database:process.env.DB_NAME
     });
 
-    mysql_conn.query('SELECT albumName, url, photoName FROM photos RIGHT JOIN albums on photos.photoID = albums.thumbnailID ORDER BY photos.timestamp desc;', (err,rows) => {
+    mysql_conn.query(`
+      SELECT
+        A.albumName,
+        A.url,
+        T.photoName
+      FROM
+        albums as A
+        LEFT JOIN photos AS P ON A.id = P.albumId
+        LEFT JOIN photos AS T ON A.thumbnailId = T.photoId
+      GROUP BY
+        A.albumName,
+        A.url,
+        T.photoName
+      ORDER BY
+        max(P.timestamp) DESC;`, (err,rows) => {
       if(err){
         if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
       } else {
