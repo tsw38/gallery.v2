@@ -29,6 +29,19 @@ import {
 Console();
 
 export default class App extends React.Component {
+  componentWillMount(){
+    if(global.window && localStorage){
+      if(localStorage.getItem(process.env.LOCALSTORAGE_KEY)){
+        let expiration = ObjectUtil.deepFind(JSON.parse(localStorage.getItem(process.env.LOCALSTORAGE_KEY) || {}), 'expiration');
+        expiration = expiration ? new Date(expiration).getTime() : false;
+        let now = (new Date()).getTime();
+        if(expiration <= now){
+          localStorage.clear(process.env.LOCALSTORAGE_KEY);
+        }
+      }
+    }
+  }
+
   render(){
     return(
       <React.Fragment>
