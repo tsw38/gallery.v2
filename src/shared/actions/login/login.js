@@ -12,11 +12,7 @@ async function login({userName, password}) {
       password: btoa(password)
     }
   });
-
-  console.log(token.data, 2);
-  return token;
-  // const gallery  = response.data;
-  // return gallery;
+  return token.data;
 }
 
 export {

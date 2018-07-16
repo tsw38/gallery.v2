@@ -14,7 +14,8 @@ import {
   Archive,
   Gallery,
   About,
-  Login
+  Login,
+  Dashboard
 } from '../../views/index';
 
 import {
@@ -50,6 +51,7 @@ export default class App extends React.Component {
               <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
+              <Route path="/dashboard/" component={ Dashboard } />
             </AppProvider>
           </Switch>
       </React.Fragment>

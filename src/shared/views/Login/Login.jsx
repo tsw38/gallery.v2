@@ -61,6 +61,21 @@ class Login extends React.Component {
       userName:this.state.userName,
       password:this.state.password
     });
+
+    if(loggedIn.success){
+      this.setState({
+        success: true
+      }, () => {
+        localStorage.setItem('galleryUser', JSON.stringify(loggedIn));
+        
+      })
+    } else {
+      this.setState({
+        success: false
+      }, () => {
+        localStorage.clear()
+      })
+    }
   }
 
   render(){

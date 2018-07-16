@@ -105,7 +105,12 @@ const BackgroundWrapper = styled.div`
   width:inherit;
 `;
 
-const Background = styled.div`
+const Background = styled.div.attrs({
+  style: ({ image, active, pending }) => ({
+      backgroundImage: `url('${image}')`,
+  })
+})`
+
   position:absolute;
   top:0;bottom:0;
   left:0; right:0;
@@ -113,10 +118,7 @@ const Background = styled.div`
   background-repeat:no-repeat;
   background-position: center 25%;
   transform-origin: ${props => props.changeOrigin};
-  ${props => css`
-      background-image: url('${props.image}');
-    `
-  }
+
   ${props => (!props.active && !props.pending) && css`
       transition: transform 0s cubic-bezier(0.35, 0.35, 1, 1);
       opacity: 0;

@@ -8,7 +8,7 @@ import {
   Login,
   Archive,
   Gallery,
-  Admin
+  Dashboard
 } from '../../shared/views';
 
 import {
@@ -84,6 +84,18 @@ const routes = [
           return {
             key: 'login',
             ...LoginActions.stateManager.initState()
+          }
+        }
+      },
+      {
+        path: '/dashboard/',
+        exact:false,
+        component: Dashboard,
+        preRender: async () => {
+          console.warn('this is where the prerequired info would be')
+          return {
+            key: 'dashboard',
+            // ...LoginActions.stateManager.initState()
           }
         }
       }
