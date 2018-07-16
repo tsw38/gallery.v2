@@ -61,7 +61,7 @@ class About extends React.Component {
           <RightContent>
             <h1>Hey!</h1>
             <p>
-              I am a portrait &amp; wedding photographer who recently moved from New York City and am now based in the Chicago area.  The people that I have had the chance to photograph along my way have really made my photography experience worthwhile. To be able to look back on your
+              I am a portrait &amp; wedding photographer who recently moved from New York City and am now based in the Chicago area. The people that I have had the chance to photograph along my way have really made my photography experience worthwhile. To be able to look back on your
               life by the moments captured in pictures, is the most rewarding souvenir of a life well spent. If you are looking to hold onto a special moment in your life,
               reach out and give me a call.
             </p>

@@ -18,12 +18,15 @@ import {
   Dashboard
 } from '../../views/index';
 
+const {
+  MainDashboard
+} = Dashboard;
+
 import {
   AppProvider
 } from '../../context/Context.jsx';
 
 Console();
-
 
 export default class App extends React.Component {
   render(){
@@ -51,7 +54,7 @@ export default class App extends React.Component {
               <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
-              <Route path="/dashboard/" component={ Dashboard } />
+              <Route exact path="/dashboard/" component={ MainDashboard }/>
             </AppProvider>
           </Switch>
       </React.Fragment>

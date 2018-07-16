@@ -10,10 +10,7 @@ import {
 
 const state    = (window) ? window.__INITIAL_STATE__ : {};
 state.supportsHistory = 'pushState' in window.history;
-
-import bcrypt from 'bcryptjs';
-
-window.bcrypt = bcrypt;
+state.canUseStorage = (global.window && !!localStorage);
 
 async function populate(){
   return await ReactDOM.hydrate(

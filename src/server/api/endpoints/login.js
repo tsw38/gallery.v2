@@ -33,9 +33,11 @@ export default async (req, res, next) => {
         if(err){
           if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
         } else {
-          if(rows){
-            console.log(req.body.password);
-            console.log(rows[0].password)
+          if(rows.length){
+            // console.log('---------------------------------------------');
+            // console.log(req.body.password);
+            // console.log(rows[0].password)
+            // console.log('---------------------------------------------');
             const matched = await bcrypt.compareSync(atob(req.body.password), rows[0].password);
 
             if(matched){

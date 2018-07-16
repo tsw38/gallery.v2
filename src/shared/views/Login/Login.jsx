@@ -37,8 +37,16 @@ class Login extends React.Component {
     }
   }
 
+  async componentWillMount(){
+    if(this.props.state.canUseStorage && localStorage.getItem(process.env.LOCALSTORAGE_KEY)) {
+      window.location = '/dashboard';
+    }
+  }
+
   async componentDidMount(){
-    await this.props.actions.GlobalActions.page.render(this.props, 'login');
+    setTimeout(async() => {
+      await this.props.actions.GlobalActions.page.render(this.props, 'login');
+    }, 250);
   }
 
   async componentWillUnmount(){
@@ -52,7 +60,9 @@ class Login extends React.Component {
     })
   }
 
-  authenticate = () => async () => {
+  authenticate = () => async (e) => {
+    e.preventDefault();
+    if(!this.state.userName && !this.state.password) return;
     const {
       login
     } = this.props.actions.LoginActions;
@@ -66,8 +76,8 @@ class Login extends React.Component {
       this.setState({
         success: true
       }, () => {
-        localStorage.setItem('galleryUser', JSON.stringify(loggedIn));
-        
+        localStorage.setItem(process.env.LOCALSTORAGE_KEY, JSON.stringify(loggedIn));
+        window.location = '/dashboard';
       })
     } else {
       this.setState({
@@ -92,22 +102,33 @@ class Login extends React.Component {
         <InnerWrapper>
           <LoginBox>
             <h2>Login</h2>
-            <PseudoForm>
+            <PseudoForm onSubmit={this.authenticate()}>
               <label>
-                <span>Username</span>
+                <LabelText>
+                  Username
+                  {this.state.success == false &&
+                    <Error>&nbsp;&nbsp;Incorrect Username</Error>
+                  }
+                </LabelText>
                 <StyledUserName
                   onChange={this.storeInState('userName')}
                 />
               </label>
               <label>
-                <span>Password</span>
+                <LabelText>
+                  Password
+                  {this.state.success == false &&
+                    <Error>&nbsp;&nbsp;Incorrect Password</Error>
+                  }
+                </LabelText>
                 <StyledPassword
                   onChange={this.storeInState('password')}
                 />
               </label>
               <StyledButton
+                isDisabled={(!(this.state.userName.length && this.state.password.length))}
                 onClick={this.authenticate()}>
-               SUBMIT
+                SUBMIT
               </StyledButton>
             </PseudoForm>
           </LoginBox>
@@ -145,9 +166,9 @@ const InnerWrapper = styled.div`
 
 const LoginBox = styled.div`
   max-height: 235px;
-  height: 40vw;
   width: 50vw;
   max-width: 450px;
+  padding: 25px 0;
   background-color:rgba(255,255,255,0.9);
   border-bottom:2px solid rgba(0,0,0,0.25);
   border-radius:4px;
@@ -156,28 +177,34 @@ const LoginBox = styled.div`
     text-transform:uppercase;
     font-size:25px;
     text-align:center;
-    padding:25px 0 15px;
+    padding:0 0 15px;
   }
 `;
 
-const PseudoForm = styled.div`
+const PseudoForm = styled.form`
   margin: 0 2vw;
 
   label{
     display: block;
 
-    span {
-      display:block;
-      font-size: 12px;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.25);
-      margin-bottom: 5px;
-    }
-
     &:first-of-type{
       margin-bottom: 25px;
     }
   }
+`;
+
+const LabelText = styled.span`
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.25);
+  margin-bottom: 5px;
+`;
+
+const Error = styled.span`
+  color: red;
+  display:inline-block;
+  font-size: 10px;
 `;
 
 const StyledInputs = styled.input`
@@ -194,11 +221,15 @@ const StyledUserName = StyledInputs.extend`
 `;
 const StyledPassword = StyledInputs.extend.attrs({
   type: 'password'
-  // or we can define dynamic ones
-  // margin: props => props.size || '1em',
 })``;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button.attrs({
+  disabled: props => props.isDisabled,
+  style: ({isDisabled}) => ({
+    opacity: isDisabled ? 0.25 : 1,
+    pointerEvents: isDisabled ? 'none' : 'initial'
+  })
+})`
   text-align: center;
   margin: 25px 0 0 auto;
   display: block;

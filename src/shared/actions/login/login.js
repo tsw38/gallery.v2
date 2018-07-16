@@ -1,6 +1,6 @@
 import { Variables } from '../../utils';
 
-async function login({userName, password}) {
+async function login({userName = '', password = ''}) {
   const token = await Variables.axios({
     method: 'POST',
     url: `${Variables.origin}/api/login`,

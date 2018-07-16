@@ -65,10 +65,6 @@ class Homepage extends React.Component{
     await this.props.actions.HomepageActions.slideshow.stop(this.props);
   }
 
-  randomTransform(){
-    return `${Math.floor(Math.random() * 100)}% ${Math.floor(Math.random() * 100)}%`;
-  }
-
   render(){
     return (
       <ViewWrapper page="homepage"
@@ -76,20 +72,11 @@ class Homepage extends React.Component{
         <Helmet title="Chicago Wedding & Portrait Photographer" />
         <BackgroundWrapper>
           <Background
-            className={classNames({
-              'active': this.state.active === 0,
-              'pending': this.state.pending === 0
-            })}
             active={this.state.active === 0}
             pending={this.state.pending === 0}
             image={this.state.background[0]}
           />
           <Background
-            className={classNames({
-              'active': this.state.active === 1,
-              'pending': this.state.pending === 1
-            })}
-            changeOrigin={this.randomTransform}
             active={this.state.active === 1}
             pending={this.state.pending === 1}
             image={this.state.background[1]}
@@ -106,34 +93,26 @@ const BackgroundWrapper = styled.div`
 `;
 
 const Background = styled.div.attrs({
-  style: ({ image, active, pending }) => ({
-      backgroundImage: `url('${image}')`,
+  style: ({ image, active, pending, changeOrigin }) => ({
+    'backgroundImage': `url(${image})`,
+    opacity: (!active && !pending) ? 0 :
+      (active && !pending) ? 1 :
+      (!active && pending) ? 0 : 1,
+    transition: (!active && !pending) ?
+      'transform 0s cubic-bezier(0.35, 0.35, 1, 1)' :
+      'opacity 1s ease-in, transform 30s cubic-bezier(0.35, 0.35, 1, 1)',
+    transform: (!active && !pending) ?
+      'scale(1)' :
+      'scale(1.25)'
   })
 })`
-
+  transform-origin: 50% 50%;
   position:absolute;
   top:0;bottom:0;
   left:0; right:0;
   background-size: cover;
   background-repeat:no-repeat;
   background-position: center 25%;
-  transform-origin: ${props => props.changeOrigin};
-
-  ${props => (!props.active && !props.pending) && css`
-      transition: transform 0s cubic-bezier(0.35, 0.35, 1, 1);
-      opacity: 0;
-      transform: scale(1);
-  `}
-  ${props => (props.active || props.pending) && css`
-      transition: opacity 1s ease-in, transform 30s cubic-bezier(0.35, 0.35, 1, 1);
-      transform: scale(1.25);
-  `}
-  ${props => (props.active && !props.pending) && css`
-      opacity: 1;
-  `}
-  ${props => (!props.active && props.pending) && css`
-      opacity:0;
-  `}
 `;
 
 export default props => (

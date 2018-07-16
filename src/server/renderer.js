@@ -24,6 +24,9 @@ const asyncMatchRoute = async (routes,location) => {
     .filter(Boolean)
     .filter(component => !!component.route && !!component.route.path)
     .map(({route}) => {
+      console.log('-----------------------------------')
+      console.log(route);
+      console.log('-----------------------------------');
       return {
         component: route.component,
         preRender: route.preRender

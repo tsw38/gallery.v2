@@ -3,20 +3,25 @@ import {
 } from '../../shared/components';
 
 import {
-  Homepage,
   About,
   Login,
   Archive,
   Gallery,
+  Homepage,
   Dashboard
 } from '../../shared/views';
 
+const {
+  MainDashboard
+} = Dashboard;
+
 import {
-  GlobalActions,
-  HomepageActions,
   AboutActions,
+  LoginActions,
+  GlobalActions,
   ArchiveActions,
-  LoginActions
+  HomepageActions,
+  DashboardActions
 } from '../../shared/actions';
 
 const routes = [
@@ -90,12 +95,11 @@ const routes = [
       {
         path: '/dashboard/',
         exact:false,
-        component: Dashboard,
+        component: MainDashboard,
         preRender: async () => {
-          console.warn('this is where the prerequired info would be')
           return {
             key: 'dashboard',
-            // ...LoginActions.stateManager.initState()
+            ...DashboardActions.stateManager.initState()
           }
         }
       }

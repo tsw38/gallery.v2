@@ -4,7 +4,7 @@ import HomepageView from './Homepage/Homepage.jsx';
 import LoginView from './Login/Login.jsx';
 import ViewWrapperComponent from './ViewWrapper.jsx';
 import GalleryView from './Gallery/Gallery.jsx';
-import DashboardViews from './Dashboard';
+import * as DashboardViews from './Dashboard/index';
 
 export const About = AboutView;
 export const Archive = ArchiveView;

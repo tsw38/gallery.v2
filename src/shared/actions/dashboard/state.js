@@ -1,8 +1,9 @@
 const initState = (nextState = {}) => {
   return {
-    render: false,
-    userName: '',
-    password: ''
+	success: false,
+	expiration: -1,
+	render: false,
+	accessLevel: -1
   }
 };
 
