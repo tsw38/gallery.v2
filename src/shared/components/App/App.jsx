@@ -4,17 +4,17 @@ import { Helmet } from 'react-helmet';
 import { injectGlobal } from 'styled-components';
 
 import {
-  Variables,
   Console,
-  currentFontSize
+  Variables,
+  ObjectUtil
 } from '../../utils';
 
 import {
-  Homepage,
-  Archive,
-  Gallery,
   About,
   Login,
+  Archive,
+  Gallery,
+  Homepage,
   Dashboard
 } from '../../views/index';
 

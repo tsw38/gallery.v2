@@ -1,12 +1,14 @@
 import React from 'react';
-import uuid from 'uuid/v4';
 
 import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
 
+import { MainSidebar } from '../Sidebar/index';
+
 import { ViewWrapper } from '../../index';
 import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
+
 
 class MainDashboard extends React.Component{
   constructor(props){
@@ -51,7 +53,7 @@ class MainDashboard extends React.Component{
             expiration,
             accessLevel            
           }, () => {
-            // console.log(this.state, 2);
+            console.log(this.state, 8);
           })
         }
       }
@@ -130,7 +132,7 @@ class MainDashboard extends React.Component{
         <Helmet title="Dashboard - Chicago Wedding & Portrait Photographer" />
         <DashboardWrapperOuter>
           <DashboardWrapper>
-            <Sidebar />
+            <MainSidebar />
             <MainContent />
           </DashboardWrapper>
         </DashboardWrapperOuter>
@@ -165,9 +167,6 @@ const DashboardWrapper = styled.div`
     'sidebar main';
 `
 
-const Sidebar = styled.div`
-  grid-area: sidebar;
-`;
 
 const MainContent = styled.div`
   grid-area: main;
