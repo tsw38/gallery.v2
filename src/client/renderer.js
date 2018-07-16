@@ -11,6 +11,10 @@ import {
 const state    = (window) ? window.__INITIAL_STATE__ : {};
 state.supportsHistory = 'pushState' in window.history;
 
+import bcrypt from 'bcryptjs';
+
+window.bcrypt = bcrypt;
+
 async function populate(){
   return await ReactDOM.hydrate(
     <BrowserRouter forceRefresh={!state.supportsHistory}>

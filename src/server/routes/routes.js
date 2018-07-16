@@ -7,14 +7,16 @@ import {
   About,
   Login,
   Archive,
-  Gallery
+  Gallery,
+  Admin
 } from '../../shared/views';
 
 import {
   GlobalActions,
   HomepageActions,
   AboutActions,
-  ArchiveActions
+  ArchiveActions,
+  LoginActions
 } from '../../shared/actions';
 
 const routes = [
@@ -74,14 +76,14 @@ const routes = [
         }
       },
       {
-        name: 'Login',
         path: '/login/',
         exact:true,
         component: Login,
-        preRender: () => {
+        preRender: async () => {
+          console.warn('this is where the prerequired info would be')
           return {
             key: 'login',
-            requiredStuff: "I NEEEED STUFF DONE HERE"
+            ...LoginActions.stateManager.initState()
           }
         }
       }

@@ -7,16 +7,18 @@ import chalk from 'chalk';
 import dotenv from 'dotenv';
 import compression from 'compression';
 import favicon from 'serve-favicon';
-
 import ServerRenderer from './renderer';
 import {Variables} from '../shared/utils';
+import jwt from 'jsonwebtoken';
 
 import {
   imagesEndpoint,
   archiveEndpoint,
   sitemapEndpoint,
   galleryEndpoint,
-  loginEndpoint
+  loginEndpoint,
+  authenticate,
+  authenticationEndpoint
 } from './api';
 
 dotenv.config();
@@ -44,13 +46,15 @@ app
 .get('/api/images(/:folder)?(/:image)?', imagesEndpoint)
 .get('/api/archive(/:gallery)?', archiveEndpoint)
 .get('/api/gallery/:gallery', galleryEndpoint)
+.use('/api/login', loginEndpoint)
+// .use('/api/protected', authenticate, authenticationEndpoint)
 .get('/sitemap/?',sitemapEndpoint)
 .use(ServerRenderer);
 
 
 app.listen(process.env.HTTP_PORT,'0.0.0.0', () => {
   // console.log(Variables);
-  
+
   console.log(chalk.magenta(`VERSION NUMBER: ${process.env.VERSION_NUMBER}`))
   console.log(chalk.green(`${Variables.origin} is live PID:${process.pid}`));
 });

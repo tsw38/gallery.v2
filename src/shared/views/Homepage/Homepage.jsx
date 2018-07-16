@@ -65,6 +65,10 @@ class Homepage extends React.Component{
     await this.props.actions.HomepageActions.slideshow.stop(this.props);
   }
 
+  randomTransform(){
+    return `${Math.floor(Math.random() * 100)}% ${Math.floor(Math.random() * 100)}%`;
+  }
+
   render(){
     return (
       <ViewWrapper page="homepage"
@@ -85,6 +89,7 @@ class Homepage extends React.Component{
               'active': this.state.active === 1,
               'pending': this.state.pending === 1
             })}
+            changeOrigin={this.randomTransform}
             active={this.state.active === 1}
             pending={this.state.pending === 1}
             image={this.state.background[1]}
@@ -107,6 +112,7 @@ const Background = styled.div`
   background-size: cover;
   background-repeat:no-repeat;
   background-position: center 25%;
+  transform-origin: ${props => props.changeOrigin};
   ${props => css`
       background-image: url('${props.image}');
     `

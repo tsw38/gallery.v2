@@ -202,6 +202,7 @@ const BackgroundWrapper = styled.div`
   background-image:url(${Variables.origin + '/api/images/random'});
   background-repeat:no-repeat;
   background-size:cover;
+  background-position: center;
   user-select: none;
   pointer-events: none;
   position:absolute;
