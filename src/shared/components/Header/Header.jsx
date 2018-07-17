@@ -92,6 +92,10 @@ const StyledLink = styled(Link)`
       background-color:${Variables.textBlack};
     }
   }
+
+  @media only screen and (max-width:468px){
+    font-size:12px;
+  }
 `;
 
 const StyledList = styled.ul`
@@ -137,6 +141,10 @@ const ListElement = styled.li`
     &.facebook{
       text-transform:lowercase;
       font-size:18px;
+
+      @media only screen and (max-width:468px){
+        font-size:12px;
+      }
     }
 
     .gridWrapper{
@@ -169,6 +177,10 @@ const ListElement = styled.li`
           }
         }
       }
+    }
+
+    @media only screen and (max-width:468px){
+      font-size:12px;
     }
   }
 `;

@@ -4,12 +4,13 @@ import styled, { css } from 'styled-components';
 import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
 
+import AdminSidebar from './Admin.jsx';
+
 class MainSidebar extends React.Component{
   constructor(props){
     super(props);
     const { state, actions } = this.props;
 
-    // console.log(this.props);
     this.state = state.dashboard ? {
       ...state.dashboard,
     } : actions.DashboardActions.stateManager.initState()
@@ -19,9 +20,9 @@ class MainSidebar extends React.Component{
   }
 
   async componentWillReceiveProps(nextProps){
-    const parentState = await nextProps.getParentState();
+    const parentState = await nextProps.getParentState('dashboard');
     const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
-    console.log(this.state, 1);
+    // console.log(this.state, 1);
     if (stateChanged) {
       this.setState({
         ...this.state,
@@ -38,10 +39,15 @@ class MainSidebar extends React.Component{
   async componentWillUnmount() {
   }
 
+  renderSidebar(){
+    return <AdminSidebar />
+  }
+
   render(){
     return (
-	  <SidebarWrapper>
-	  </SidebarWrapper>
+  	  <SidebarWrapper>
+        <AdminSidebar />
+  	  </SidebarWrapper>
     )
   }
 }
@@ -56,5 +62,5 @@ export default props => (
 
 const SidebarWrapper = styled.div`
   grid-area: sidebar;
-  background-color:red;
+  background-color:${Variables.backgroundState};
 `;

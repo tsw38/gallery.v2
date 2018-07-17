@@ -51,7 +51,8 @@ class MainDashboard extends React.Component{
             ...this.state,
             ...parentState,
             expiration,
-            accessLevel            
+            render: true,
+            accessLevel
           }, () => {
             console.log(this.state, 8);
           })
@@ -128,7 +129,7 @@ class MainDashboard extends React.Component{
   render(){
     return (
       <ViewWrapper page="dashboard"
-          render={true}>
+          render={this.state.render}>
         <Helmet title="Dashboard - Chicago Wedding & Portrait Photographer" />
         <DashboardWrapperOuter>
           <DashboardWrapper>
