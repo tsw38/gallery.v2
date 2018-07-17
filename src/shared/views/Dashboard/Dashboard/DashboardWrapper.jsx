@@ -134,7 +134,9 @@ class MainDashboard extends React.Component{
         <DashboardWrapperOuter>
           <DashboardWrapper>
             <MainSidebar />
-            <MainContent />
+            <MainContent>
+              {this.props.children}
+            </MainContent>
           </DashboardWrapper>
         </DashboardWrapperOuter>
       </ViewWrapper>

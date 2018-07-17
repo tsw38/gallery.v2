@@ -15,12 +15,13 @@ import {
   Archive,
   Gallery,
   Homepage,
-  Dashboard
+  Dashboards
 } from '../../views/index';
 
 const {
-  MainDashboard
-} = Dashboard;
+  Overview,
+  DashboardWrapper
+} = Dashboards.Dashboards;
 
 import {
   AppProvider
@@ -67,7 +68,11 @@ export default class App extends React.Component {
               <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
-              <Route exact path="/dashboard/" component={ MainDashboard }/>
+              <Route path="/dashboard">
+                <DashboardWrapper>
+                  <Route path="/" component={Overview} />
+                </DashboardWrapper>
+              </Route>
             </AppProvider>
           </Switch>
       </React.Fragment>

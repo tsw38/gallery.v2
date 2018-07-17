@@ -4,4 +4,4 @@ export Homepage from './Homepage/Homepage.jsx';
 export Login from './Login/Login.jsx';
 export ViewWrapper from './ViewWrapper.jsx';
 export Gallery from './Gallery/Gallery.jsx';
-export * as Dashboard from './Dashboard/index';
+export * as Dashboards from './Dashboard/index';

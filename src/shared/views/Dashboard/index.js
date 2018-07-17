@@ -1,3 +1,1 @@
-import MainDashboardView from './Dashboard/Main.jsx';
-
-export const MainDashboard = MainDashboardView;
+export * as Dashboards from './Dashboard';

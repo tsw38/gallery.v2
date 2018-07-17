@@ -71,7 +71,7 @@ const routes = [
       },
       {
         path: '/dashboard/',
-        exact:false,
+        exact: false,
         preRender: async () => {
           return {
             key: 'dashboard',
