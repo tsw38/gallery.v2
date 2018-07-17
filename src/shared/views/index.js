@@ -1,15 +1,7 @@
-import AboutView from './About/About.jsx';
-import ArchiveView from './Archive/Archive.jsx';
-import HomepageView from './Homepage/Homepage.jsx';
-import LoginView from './Login/Login.jsx';
-import ViewWrapperComponent from './ViewWrapper.jsx';
-import GalleryView from './Gallery/Gallery.jsx';
-import * as DashboardViews from './Dashboard/index';
-
-export const About = AboutView;
-export const Archive = ArchiveView;
-export const Homepage = HomepageView;
-export const Login = LoginView;
-export const ViewWrapper = ViewWrapperComponent;
-export const Gallery = GalleryView;
-export const Dashboard = DashboardViews;
+export About from './About/About.jsx';
+export Archive from './Archive/Archive.jsx';
+export Homepage from './Homepage/Homepage.jsx';
+export Login from './Login/Login.jsx';
+export ViewWrapper from './ViewWrapper.jsx';
+export Gallery from './Gallery/Gallery.jsx';
+export * as Dashboard from './Dashboard/index';

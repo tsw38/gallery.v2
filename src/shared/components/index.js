@@ -1,13 +1,6 @@
-import AppComponent from './App/App.jsx';
-import FooterComponent from './Footer/Footer.jsx';
-import HeaderComponent from './Header/Header.jsx';
-import LazyLoadComponent from './LazyLoad/LazyLoad.jsx';
-import LightboxComponent from './Lightbox/Lightbox.jsx';
-import AuthenticationComponent from './Authentication/Authentication';
-
-export const App            = AppComponent;
-export const Footer         = FooterComponent;
-export const Header         = HeaderComponent;
-export const LazyLoad       = LazyLoadComponent;
-export const Lightbox       = LightboxComponent;
-export const Authentication = AuthenticationComponent;
+export App from './App/App.jsx';
+export Footer from './Footer/Footer.jsx';
+export Header from './Header/Header.jsx';
+export LazyLoad from './LazyLoad/LazyLoad.jsx';
+export Lightbox from './Lightbox/Lightbox.jsx';
+export Authentication from './Authentication/Authentication';

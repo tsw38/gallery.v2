@@ -28,13 +28,12 @@ const asyncMatchRoute = async (routes,location) => {
       console.log(route);
       console.log('-----------------------------------');
       return {
-        component: route.component,
         preRender: route.preRender
       }
     })
     .slice(-1);
 
-  console.log(chalk.green('MATCHED!!!!!'), matchedRoute);
+  // console.log(chalk.green('MATCHED!!!!!'), matchedRoute);
 
   if(matchedRoute){
     try{

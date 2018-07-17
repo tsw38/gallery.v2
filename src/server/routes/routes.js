@@ -1,21 +1,4 @@
 import {
-  App
-} from '../../shared/components';
-
-import {
-  About,
-  Login,
-  Archive,
-  Gallery,
-  Homepage,
-  Dashboard
-} from '../../shared/views';
-
-const {
-  MainDashboard
-} = Dashboard;
-
-import {
   AboutActions,
   LoginActions,
   GlobalActions,
@@ -26,12 +9,10 @@ import {
 
 const routes = [
   {
-    component: App,
     routes: [
       {
         path: '/',
         exact:true,
-        component: Homepage,
         preRender: async () => {
           const requiredToRender = await GlobalActions.imagesHelper.getAllImages();
           return {
@@ -44,10 +25,8 @@ const routes = [
       {
         path: '/archive/',
         exact: false,
-        component: Archive,
         routes: [
           { path: '/archive/:gallery',
-            component: Gallery,
             preRender: async (gallery) => {
               const images = await ArchiveActions.gallery.getGallery(gallery);
               return {
@@ -71,7 +50,6 @@ const routes = [
       {
         path: '/about/',
         exact:true,
-        component: About,
         preRender: async () => {
           // console.warn('this is where the prerequired info would be')
           return {
@@ -83,7 +61,6 @@ const routes = [
       {
         path: '/login/',
         exact:true,
-        component: Login,
         preRender: async () => {
           console.warn('this is where the prerequired info would be')
           return {
@@ -95,7 +72,6 @@ const routes = [
       {
         path: '/dashboard/',
         exact:false,
-        component: MainDashboard,
         preRender: async () => {
           return {
             key: 'dashboard',
