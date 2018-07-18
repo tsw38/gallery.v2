@@ -10,126 +10,29 @@ import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
 
 
-class MainDashboard extends React.Component{
+class MainDashboardWrapper extends React.Component{
   constructor(props){
     super(props);
-    const { state, actions } = this.props;
-
-    // console.log(this.props);
-    this.state = state.dashboard ? {
-      ...state.dashboard,
-    } : actions.DashboardActions.stateManager.initState()
   }
 
   async componentWillMount(){
-    if(global.window && localStorage){
-      if(!localStorage.getItem(process.env.LOCALSTORAGE_KEY)){
-        global.location = '/';
-      } else {
-        let expiration = ObjectUtil.deepFind(JSON.parse(localStorage.getItem(process.env.LOCALSTORAGE_KEY) || {}), 'expiration');
-        expiration = expiration ? new Date(expiration).getTime() : false;
-        let now = (new Date()).getTime();
-        if(expiration <= now){
-          localStorage.clear(process.env.LOCALSTORAGE_KEY);
-          await this.props.stateUpdater('dashboard', {
-            ...this.props.getParentState('dashboard'),
-            success: false,
-            expiration: -1,
-            render: false,
-            accessLevel: -1
-          })
-          window.location = '/';
-        } else {
-          const parentState = await this.props.getParentState('dashboard');
-          const {
-            expiration,
-            accessLevel,
-            ...rest
-          } = JSON.parse(localStorage.getItem(process.env.LOCALSTORAGE_KEY));
-
-          this.setState({
-            ...this.state,
-            ...parentState,
-            expiration,
-            render: true,
-            accessLevel
-          }, () => {
-            console.log(this.state, 8);
-          })
-        }
-      }
-    } else {
-      global.location = '/';
-    }
   }
 
   async componentWillReceiveProps(nextProps){
-    // const parentState = await nextProps.getParentState('archive');
-    // const stateChanged = ObjectUtil.compare(this.state, parentState).changed;
-    // if (stateChanged) {
-    //   this.setState({
-    //     ...this.state,
-    //     ...parentState
-    //   });
-    // }
   }
 
   async componentDidMount() {
-    // const {
-    //   actions,
-    //   stateUpdater
-    // } = this.props;
-    // const {ArchiveActions, GlobalActions} = actions;
-    //
-    // if(this.state.gallery.length === 0){
-    //   const gallery = await ArchiveActions.gallery.getThumbnails();
-    //
-    //   this.setState({
-    //     ...this.state,
-    //     gallery
-    //   })
-    //
-    //   await stateUpdater('archive', {
-    //     ...this.state,
-    //     gallery
-    //   });
-    // }
-    //
-    // await GlobalActions.page.render(this.props, 'archive');
   }
 
 
 
   async componentWillUnmount() {
-    // await this.props.actions.GlobalActions.page.hide(this.props, 'archive');
-  }
-
-  async onThumbnailClick(albumName) {
-    // await this.props.stateUpdater('gallery', {
-    //   albumName,
-    //   render: false
-    // });
-  }
-
-  generateThumbnails() {
-    // const { gallery } = this.state;
-    // return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map((item) => {
-    //   return (
-    //     <Thumbnail
-    //       key={uuid()}
-    //       onClick={() => this.onThumbnailClick(item.url)}
-    //       albumName={item.albumName}
-    //       photoName={item.photoName}
-    //       url={item.url}>
-    //     </Thumbnail>
-    //   )
-    // }) : null;
   }
 
   render(){
     return (
       <ViewWrapper page="dashboard"
-          render={this.state.render}>
+          render={true}>
         <Helmet title="Dashboard - Chicago Wedding & Portrait Photographer" />
         <DashboardWrapperOuter>
           <DashboardWrapper>
@@ -147,7 +50,7 @@ class MainDashboard extends React.Component{
 export default props => (
   <Consumer>
     {context => {
-      return <MainDashboard {...props} {...context} />
+      return <MainDashboardWrapper {...props} {...context} />
     }}
   </Consumer>
 )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { injectGlobal } from 'styled-components';
 
@@ -20,8 +20,12 @@ import {
 
 const {
   Overview,
-  DashboardWrapper
+  DashboardWrapper,
+  AdminBackgrounds,
+  AdminGalleries,
+  AdminProofs
 } = Dashboards.Dashboards;
+
 
 import {
   AppProvider
@@ -40,6 +44,19 @@ export default class App extends React.Component {
           localStorage.clear(process.env.LOCALSTORAGE_KEY);
         }
       }
+    }
+  }
+
+  renderDashboardRoute(params = '') {
+    switch(params){
+      case 'backgrounds':
+        return <AdminBackgrounds />;
+      case 'galleries':
+      return <AdminGalleries />
+      case 'proofs':
+        return <AdminProofs />
+      default:
+        return <Overview />;
     }
   }
 
@@ -68,11 +85,13 @@ export default class App extends React.Component {
               <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
-              <Route path="/dashboard">
-                <DashboardWrapper>
-                  <Route path="/" component={Overview} />
-                </DashboardWrapper>
-              </Route>
+              <Route path="/dashboard/:subDash" children={({match}) => {
+                return(
+                  <DashboardWrapper>
+                    {this.renderDashboardRoute(ObjectUtil.deepFind(match, 'params.subDash'))}
+                  </DashboardWrapper>
+                )
+              }}/>
             </AppProvider>
           </Switch>
       </React.Fragment>
