@@ -5,7 +5,10 @@ const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
 const dotenv                  = require('dotenv');
 const dotenv_webpack          = require('dotenv-webpack');
 
-dotenv.config();
+dotenv.config({
+  path: './.env.prod',
+  safe:true
+});
 
 module.exports = [
   {
