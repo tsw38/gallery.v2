@@ -6,16 +6,31 @@ import styled, { css } from 'styled-components';
 import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
 
+import AdminOverview from './Admin/AdminOverview.jsx';
+import UserOverview from './User/UserOverview.jsx';
+import atob from 'atob';
+import btoa from 'btoa';
 
 class Overview extends React.Component{
-  constructor(props){
-    super(props);
+  state = {
+    shouldRender: false
+  }
+  componentWillMount(){
+    const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
+    const userData = JSON.parse(atob(signedIn));
+    this.setState({
+      'accessLevel': btoa(userData.accessLevel)
+    })
   }
   render(){
     return (
-	  <div>
-		  <h1>OVERVIEW</h1>
-	  </div>
+      <React.Fragment>
+        {(this.state['accessLevel'] === btoa('1')) ? (
+          <AdminOverview />
+        ) : (
+          <UserOverview />
+        )}
+      </React.Fragment>
     )
   }
 }

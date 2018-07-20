@@ -112,7 +112,7 @@ const Background = styled.div.attrs({
   left:0; right:0;
   background-size: cover;
   background-repeat:no-repeat;
-  background-position: center 25%;
+  background-position: center top;
 `;
 
 export default props => (

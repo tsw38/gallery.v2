@@ -72,6 +72,15 @@ const routes = [
       {
         path: '/dashboard/',
         exact: false,
+        routes: [
+          { path: '/dashboard/:subdash',
+            preRender: async (subdash) => {
+              return {
+                key: 'dashboard'
+              }
+            }
+          }
+        ],
         preRender: async () => {
           return {
             key: 'dashboard',

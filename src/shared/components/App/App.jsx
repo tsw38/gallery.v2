@@ -2,6 +2,8 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { injectGlobal } from 'styled-components';
+import Cookie from 'js-cookie';
+import atob from 'atob';
 
 import {
   Console,
@@ -31,34 +33,56 @@ import {
   AppProvider
 } from '../../context/Context.jsx';
 
-Console();
+// Console();
 
 export default class App extends React.Component {
   componentWillMount(){
-    if(global.window && localStorage){
-      if(localStorage.getItem(process.env.LOCALSTORAGE_KEY)){
-        let expiration = ObjectUtil.deepFind(JSON.parse(localStorage.getItem(process.env.LOCALSTORAGE_KEY) || {}), 'expiration');
-        expiration = expiration ? new Date(expiration).getTime() : false;
-        let now = (new Date()).getTime();
-        if(expiration <= now){
-          localStorage.clear(process.env.LOCALSTORAGE_KEY);
-        }
+
+    const activeUser = Cookie.get(process.env.COOKIE_NAME) || ObjectUtil.deepFind(this.props, 'cookies.galleryUser');
+
+    if(activeUser){
+      const parsed = JSON.parse(atob(activeUser));
+      let {
+        accessLevel,
+        expiration
+      } = parsed;
+      expiration = new Date(expiration);
+      if(expiration.getTime() <= (new Date()).getTime()){
+        Cookie.remove(process.env.COOKIE_NAME);
       }
     }
   }
 
-  renderDashboardRoute(params = '') {
-    switch(params){
+  Dashboard = ({match}) => {
+    const subDash = ObjectUtil.deepFind(match, 'params.subdash');
+    
+    switch(subDash){
       case 'backgrounds':
-        return <AdminBackgrounds />;
+        return (
+          <DashboardWrapper>
+            <AdminBackgrounds />
+          </DashboardWrapper>
+        );
       case 'galleries':
-      return <AdminGalleries />
+        return (
+          <DashboardWrapper>
+            <AdminGalleries />
+          </DashboardWrapper>
+        );
       case 'proofs':
-        return <AdminProofs />
+        return (
+          <DashboardWrapper>
+            <AdminProofs />
+          </DashboardWrapper>
+        );
       default:
-        return <Overview />;
+        return (
+          <DashboardWrapper>
+            <Overview />
+          </DashboardWrapper>
+        );
     }
-  }
+  };
 
   render(){
     return(
@@ -85,13 +109,8 @@ export default class App extends React.Component {
               <Route exact path="/archive/:gallery" component={ Gallery } />
               <Route exact path="/about/" component={ About } />
               <Route exact path="/login/" component={ Login } />
-              <Route path="/dashboard/:subDash" children={({match}) => {
-                return(
-                  <DashboardWrapper>
-                    {this.renderDashboardRoute(ObjectUtil.deepFind(match, 'params.subDash'))}
-                  </DashboardWrapper>
-                )
-              }}/>
+              <Route exact path="/dashboard/" component={this.Dashboard}/>
+              <Route exact path="/dashboard/:subdash" component={this.Dashboard}/>
             </AppProvider>
           </Switch>
       </React.Fragment>

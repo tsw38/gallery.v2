@@ -8,14 +8,22 @@ import { MainSidebar } from '../Sidebar/index';
 import { ViewWrapper } from '../../index';
 import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
-
+import Cookie from 'js-cookie';
 
 class MainDashboardWrapper extends React.Component{
-  constructor(props){
-    super(props);
+  state = {
+    shouldRender: false
   }
 
   async componentWillMount(){
+    const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
+    if(!signedIn){
+      global.location = '/';
+    } else {
+      this.setState({
+        shouldRender: true
+      })
+    }
   }
 
   async componentWillReceiveProps(nextProps){
@@ -32,16 +40,18 @@ class MainDashboardWrapper extends React.Component{
   render(){
     return (
       <ViewWrapper page="dashboard"
-          render={true}>
+          render={this.state.shouldRender}>
         <Helmet title="Dashboard - Chicago Wedding & Portrait Photographer" />
-        <DashboardWrapperOuter>
-          <DashboardWrapper>
-            <MainSidebar />
-            <MainContent>
-              {this.props.children}
-            </MainContent>
-          </DashboardWrapper>
-        </DashboardWrapperOuter>
+        {this.state.shouldRender &&
+          <DashboardWrapperOuter>
+            <DashboardWrapper>
+              <MainSidebar />
+              <MainContent>
+                {this.props.children}
+              </MainContent>
+            </DashboardWrapper>
+          </DashboardWrapperOuter>
+        }
       </ViewWrapper>
     )
   }

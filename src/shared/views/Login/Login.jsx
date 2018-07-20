@@ -1,6 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled, { css } from 'styled-components';
+import atob from 'atob';
+import btoa from 'btoa';
+import Cookie from 'js-cookie';
 
 import {
   ViewWrapper
@@ -38,8 +41,9 @@ class Login extends React.Component {
   }
 
   async componentWillMount(){
-    if(this.props.state.canUseStorage && localStorage.getItem(process.env.LOCALSTORAGE_KEY)) {
-      window.location = '/dashboard';
+    const cookie = Cookie.get(process.env.COOKIE_NAME);
+    if(cookie) {
+      global.location = '/dashboard';
     }
   }
 
@@ -54,7 +58,6 @@ class Login extends React.Component {
   }
 
   storeInState = (storageKey) => (event) => {
-
     this.setState({
       [storageKey]: event.target.value
     })
@@ -67,17 +70,18 @@ class Login extends React.Component {
       login
     } = this.props.actions.LoginActions;
 
-    const loggedIn = await login.login({
+    let loggedIn = await login.login({
       userName:this.state.userName,
       password:this.state.password
     });
 
-    if(loggedIn.success){
+    loggedIn = atob(loggedIn);
+    if(JSON.parse(loggedIn).success){
       this.setState({
         success: true
       }, () => {
-        localStorage.setItem(process.env.LOCALSTORAGE_KEY, JSON.stringify(loggedIn));
-        window.location = '/dashboard';
+        Cookie.set(process.env.COOKIE_NAME, btoa(loggedIn));
+        global.location = '/dashboard';
       })
     } else {
       this.setState({

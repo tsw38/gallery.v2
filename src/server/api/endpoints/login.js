@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import mysql from 'mysql';
 import bcrypt from 'bcryptjs';
 import atob from 'atob';
+import btoa from 'btoa';
 
 export default async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -44,20 +45,26 @@ export default async (req, res, next) => {
               const expiration = new Date();
               expiration.setHours(expiration.getHours() + 1);
 
-              res.json({
+              const responseLevel = {
                 success: !!rows,
                 accessLevel: rows && rows[0].accessLevel,
                 expiration
-              })
+              };
+
+              res.send(btoa(JSON.stringify(responseLevel)));
             } else {
-              res.json({
-                success: false
-              })
+              res.send(btoa(
+                JSON.stringify({
+                  success: false
+                })
+              ));
             }
           } else {
-            res.json({
-              success: false
-            })
+            res.send(btoa(
+              JSON.stringify({
+                success: false
+              })
+            ));
           }
         }
       });

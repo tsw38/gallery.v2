@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-
+import Cookie from 'js-cookie';
 import * as AllActions from '../shared/actions';
 
 import {
@@ -18,6 +18,7 @@ async function populate(){
       <App
         state={state}
         actions={AllActions}
+        cookies={Cookie.get()}
       />
     </BrowserRouter>,
     document.getElementById('gallery')

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-
+import Cookie from 'js-cookie';
 import {
   Variables,
   ObjectUtils
@@ -16,16 +16,10 @@ export default class Footer extends Component{
     }
   }
   componentDidMount(){
-    if(global.window && localStorage){
-      if(localStorage.getItem(process.env.LOCALSTORAGE_KEY)){
-        this.setState({
-          signedIn: true
-        })
-      } else {
-        this.setState({
-          signedIn: false
-        });  
-      }
+    if(global.window && Cookie.get(process.env.COOKIE_NAME)){
+      this.setState({
+        signedIn: true
+      })
     } else {
       this.setState({
         signedIn: false
@@ -35,7 +29,7 @@ export default class Footer extends Component{
   render(){
     return (
       <StyledFooter>
-        {this.state.signedIn && 
+        {this.state.signedIn &&
           <LeftContent>
             <StyledLink to={'/dashboard'} title="Dashboard">
               <StyledSVG xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -95,7 +89,7 @@ const LeftContent  = SubMenuContent.extend`
       }
     }
   }
-  
+
 `;
 const RightContent = SubMenuContent.extend`
   ${StyledLink} {
