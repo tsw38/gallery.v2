@@ -1,24 +1,22 @@
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
+import mysql from 'mysql';
 
-import {
-  Numbers
-} from '../../../shared/utils';
+import { Numbers, ObjectUtil } from '../../../shared/utils';
+
+const getDirectoryImages = (directoryName,imageList) => {
+  var testDirectory = path.join(`imgs/${directoryName}`);
+  if(fs.lstatSync(testDirectory).isDirectory()){
+    var images = fs.readdirSync(testDirectory);
+    images.forEach((image) => {
+      if(!/(\.DS_Store|thumb|placeholder)/.test(image)){ imageList.push(`${directoryName}/${image}`); }
+    })
+  }
+}
 
 export default async (req,res,next) => {
-  // console.log(req.params);
-  function getDirectoryImages(directoryName,imageList){
-    var testDirectory = path.join(`imgs/${directoryName}`);
-    if(fs.lstatSync(testDirectory).isDirectory()){
-      var images = fs.readdirSync(testDirectory);
-      images.forEach((image) => {
-        if(!/(\.DS_Store|thumb|placeholder)/.test(image)){ imageList.push(`${directoryName}/${image}`); }
-      })
-    }
-  }
-
-
+  // if asking for a specific image
   if(req.params.folder && req.params.image){
     fs.stat(path.join(`imgs/${req.params.folder}/${req.params.image}`), (err, stat) => {
       if(err == null) {
@@ -31,7 +29,9 @@ export default async (req,res,next) => {
         console.error('error code: ', err.code);
       }
     });
-  } else if (req.params.folder && !req.params.image){
+  }
+  // if requesting just the folder
+  else if (req.params.folder && !req.params.image){
     if(/random/.test(req.params.folder)){
       let imageList = [];
       let folders = await fs.readdirSync(path.join('imgs'));
@@ -39,23 +39,42 @@ export default async (req,res,next) => {
       folders.forEach((folder) => { getDirectoryImages(folder,imageList); });
       res.sendFile(`imgs/${imageList[Numbers.getRandomNumber(imageList.length-1,0)]}`, {root:'.'});
     }
+    else if(/^portrait\/?$/.test(req.params.folder)){
+      res.sendFile(`imgs/portrait.jpg`, {root:'.'});
+    }
     else if(fs.existsSync(path.join(`imgs/${req.params.folder}`))){
       // console.log('it exists please do something');
       let imageList = [];
       getDirectoryImages(`${req.params.folder}`,imageList);
       res.send(JSON.stringify(imageList));
-    }
-    else if(/^portrait\/?$/.test(req.params.folder)){
-      // console.log('you are specifically asking for the portrait url')
-      res.sendFile(`imgs/portrait.jpg`, {root:'.'});
     } else {
       res.redirect('/')
     }
   } else {
-    let imageList = [];
-    let folders = await fs.readdirSync(path.join('imgs'));
+    const mysql_conn = mysql.createConnection({
+      host:process.env.DB_HOST,
+      user:process.env.DB_USER,
+      password:process.env.DB_PASS,
+      database:process.env.DB_NAME
+    });
 
-    folders.forEach((folder) => { getDirectoryImages(folder,imageList); });
-    res.send(JSON.stringify(imageList));
+    mysql_conn.query(
+      `SELECT
+        photoName,
+        timestamp,
+        photoID,
+        albumName,
+        url as 'albumUrl'
+      FROM
+        photos, albums
+      WHERE
+        photos.albumID = albums.id
+        ${ObjectUtil.deepFind(req.query, 'backgrounds') ? 'AND background=1' : ''};`, (err,rows) => {
+      if(err){
+        if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
+      } else {
+        res.json(rows);
+      }
+    });
   }
 }

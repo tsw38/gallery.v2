@@ -5,18 +5,19 @@ import { Consumer } from '../../../context/Context.jsx';
 import { Variables, ObjectUtil } from '../../../utils';
 
 import AdminSidebar from './Admin.jsx';
+import UserSidebar from './User.jsx';
 
 class MainSidebar extends React.Component{
-  constructor(props){
-    super(props);
-    const { state, actions } = this.props;
-
-    this.state = state.dashboard ? {
-      ...state.dashboard,
-    } : actions.DashboardActions.stateManager.initState()
+  state = {
+    shouldRender: false
   }
 
   async componentWillMount(){
+    const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
+    const userData = JSON.parse(atob(signedIn));
+    this.setState({
+      'accessLevel': btoa(userData.accessLevel)
+    })
   }
 
   async componentWillReceiveProps(nextProps){
@@ -42,11 +43,15 @@ class MainSidebar extends React.Component{
   renderSidebar(){
     return <AdminSidebar />
   }
-
+  
   render(){
     return (
   	  <SidebarWrapper>
-        <AdminSidebar />
+        {(this.state['accessLevel'] === btoa('1')) ? (
+          <AdminSidebar />
+        ) : (
+          <UserSidebar />
+        )}
   	  </SidebarWrapper>
     )
   }

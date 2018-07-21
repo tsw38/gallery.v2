@@ -19,10 +19,6 @@ class MainDashboardWrapper extends React.Component{
     const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
     if(!signedIn){
       global.location = '/';
-    } else {
-      this.setState({
-        shouldRender: true
-      })
     }
   }
 
@@ -30,6 +26,12 @@ class MainDashboardWrapper extends React.Component{
   }
 
   async componentDidMount() {
+    const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
+    if(signedIn){
+      this.setState({
+        shouldRender: true
+      });
+    }
   }
 
 

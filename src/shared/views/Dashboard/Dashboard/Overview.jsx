@@ -15,13 +15,15 @@ class Overview extends React.Component{
   state = {
     shouldRender: false
   }
-  componentWillMount(){
+
+  async componentWillMount(){
     const signedIn = ObjectUtil.deepFind(this.props.state, 'cookies.galleryUser');
     const userData = JSON.parse(atob(signedIn));
     this.setState({
       'accessLevel': btoa(userData.accessLevel)
     })
   }
+  
   render(){
     return (
       <React.Fragment>

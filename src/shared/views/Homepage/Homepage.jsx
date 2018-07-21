@@ -46,7 +46,7 @@ class Homepage extends React.Component{
 
     if(this.state.images.length === 0){
 
-      const images = await GlobalActions.imagesHelper.getAllImages();
+      const images = await GlobalActions.imagesHelper.getAllImages(true);
       this.setState({
         ...this.state,
         images
