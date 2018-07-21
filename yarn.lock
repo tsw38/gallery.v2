@@ -2454,6 +2454,13 @@ express-jwt@^5.3.1:
     jsonwebtoken "^8.1.0"
     lodash.set "^4.0.0"
 
+express-sitemap@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/express-sitemap/-/express-sitemap-1.8.0.tgz#fd9047df20e53d756546fb7559e94f9240ff78e7"
+  dependencies:
+    setheaders "0.3.0"
+    tickle "1.4.0"
+
 express-unless@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/express-unless/-/express-unless-0.3.1.tgz#2557c146e75beb903e2d247f9b5ba01452696e20"
@@ -5155,6 +5162,10 @@ set-value@^2.0.0:
     is-plain-object "^2.0.3"
     split-string "^3.0.1"
 
+setheaders@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/setheaders/-/setheaders-0.3.0.tgz#3e749f337a2ee7c186c2e0dd07f45fb472488e13"
+
 setimmediate@^1.0.4, setimmediate@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
@@ -5474,6 +5485,10 @@ through2@^2.0.0, through2@^2.0.3:
 through@2, through@^2.3.6, through@~2.3, through@~2.3.1:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+
+tickle@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/tickle/-/tickle-1.4.0.tgz#b8190bc6a7045e8dfe78f4097b04d679da4242ed"
 
 tildify@^1.0.0:
   version "1.2.0"

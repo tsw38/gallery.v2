@@ -47,10 +47,8 @@ app
 .get('/api/archive(/:gallery)?', archiveEndpoint)
 .get('/api/gallery/:gallery', galleryEndpoint)
 .use('/api/login', loginEndpoint)
-// .use('/api/protected', authenticate, authenticationEndpoint)
 .get('/sitemap/?',sitemapEndpoint)
 .use(ServerRenderer);
-
 
 app.listen(process.env.HTTP_PORT,'0.0.0.0', () => {
   // console.log(Variables);
