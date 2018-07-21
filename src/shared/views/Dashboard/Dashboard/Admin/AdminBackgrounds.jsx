@@ -67,4 +67,7 @@ const BackgroundImageWrapper = styled.div`
   right:0;
   bottom:0;
   overflow-y:scroll;
+  grid-gap: 10px;
+  grid-template-columns: auto auto auto;
+  display: grid;
 `;

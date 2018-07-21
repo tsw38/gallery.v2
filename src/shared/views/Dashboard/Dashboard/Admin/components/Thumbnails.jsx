@@ -65,8 +65,8 @@ export default props => (
 )
 
 const ClickableThumbnail = styled.div`
-  width: calc(100%/3);
-  padding-top: calc(100%/3);
+  width: 100%;
+  padding-top: 100%;
   overflow:hidden;
   display:inline-block;
   vertical-align:middle;
@@ -74,7 +74,7 @@ const ClickableThumbnail = styled.div`
   cursor:pointer;
   transition: opacity 0.4s ease;
   opacity: 1;
-  
+
   &:hover{
     opacity: 0.8;
   }
