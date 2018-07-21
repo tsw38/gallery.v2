@@ -1,7 +1,7 @@
 import * as stateManager from './state';
-// import * as login from './login';
+import * as backgrounds from './updateBackground';
 
 export default {
-//   login,
-  stateManager
+  stateManager,
+  backgrounds
 }

@@ -5,3 +5,4 @@ export galleryEndpoint from './endpoints/gallery';
 export sitemapEndpoint from './endpoints/sitemap';
 export authenticationEndpoint from './endpoints/authentication';
 export authenticate from './endpoints/authenticator';
+export backgroundUpdateEndpoint from './endpoints/backgroundUpdate';

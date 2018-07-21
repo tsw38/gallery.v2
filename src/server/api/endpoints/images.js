@@ -55,7 +55,14 @@ export default async (req,res,next) => {
       host:process.env.DB_HOST,
       user:process.env.DB_USER,
       password:process.env.DB_PASS,
-      database:process.env.DB_NAME
+      database:process.env.DB_NAME,
+      typeCast: function castField( field, useDefaultTypeCasting ) {
+        if ( ( field.type === "BIT" ) && ( field.length === 1 ) ) {
+          let bytes = field.buffer();
+          return( bytes[ 0 ] === 1 );
+        }
+        return( useDefaultTypeCasting() );
+      }
     });
 
     mysql_conn.query(
@@ -64,12 +71,15 @@ export default async (req,res,next) => {
         timestamp,
         photoID,
         albumName,
+        background,
         url as 'albumUrl'
       FROM
         photos, albums
       WHERE
         photos.albumID = albums.id
-        ${ObjectUtil.deepFind(req.query, 'backgrounds') ? 'AND background=1' : ''};`, (err,rows) => {
+        ${ObjectUtil.deepFind(req.query, 'backgrounds') ? 'AND background=1' : ''}
+      ORDER BY
+        timestamp DESC;`, (err,rows) => {
       if(err){
         if(/ER_PARSE_ERROR/.test(err.code)){ res.sendStatus(409); }
       } else {

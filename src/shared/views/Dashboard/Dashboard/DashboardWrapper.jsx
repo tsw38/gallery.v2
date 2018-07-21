@@ -88,4 +88,5 @@ const DashboardWrapper = styled.div`
 
 const MainContent = styled.div`
   grid-area: main;
+  position:relative;
 `;

@@ -18,6 +18,7 @@ import {
   galleryEndpoint,
   loginEndpoint,
   authenticate,
+  backgroundUpdateEndpoint,
   authenticationEndpoint
 } from './api';
 
@@ -44,6 +45,7 @@ app
 .use('*/css', express.static(`./build/${process.env.VERSION_NUMBER}/client`))
 .use('*/js', express.static(`./build/${process.env.VERSION_NUMBER}/client`))
 .get('/api/images(/:folder)?(/:image)?', imagesEndpoint)
+.post('/api/images', backgroundUpdateEndpoint)
 .get('/api/archive(/:gallery)?', archiveEndpoint)
 .get('/api/gallery/:gallery', galleryEndpoint)
 .use('/api/login', loginEndpoint)
