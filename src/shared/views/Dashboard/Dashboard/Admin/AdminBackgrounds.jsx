@@ -39,7 +39,8 @@ class AdminBackgrounds extends React.Component{
   }
   render(){
     return (
-	     <BackgroundImageWrapper>
+	     <BackgroundImageWrapper
+        className="main--dashboard">
         {this.state.images && this.state.images.map(imageProps =>
           <Thumbnail
             key={`${imageProps.photoID}`}

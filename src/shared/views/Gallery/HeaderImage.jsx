@@ -16,42 +16,47 @@ export default class HeaderImage extends React.Component{
 		const photoUrl = `${Variables.origin}/api/images/${directory}/${url}`;
 
 		return(
-			<LazyLoad
-				data-src={photoUrl}
-				scrollListener={'.gallery'}>
-          <FirstGalleryImage>
-            <img src={photoUrl} alt="" />
-            <Overlay>
-              <span>{albumName}</span>
-            </Overlay>
-          </FirstGalleryImage>
-			</LazyLoad>
+			<MainImage
+				className="withMargin">
+				<LazyLoad
+					data-src={photoUrl}
+					scrollListener={'.gallery'}>
+	          <FirstGalleryImage>
+	            <img src={photoUrl} alt="" />
+	            <Overlay>
+	              <span>{albumName}</span>
+	            </Overlay>
+	          </FirstGalleryImage>
+				</LazyLoad>
+			</MainImage>
 		)
 	}
 }
 
-const FirstGalleryImage = styled.figure`
-  max-width:100%;
-  max-height:400px;
-  position:relative;
-  margin-bottom:10px;
-  overflow:hidden;
-  transition: max-height 500ms ease;
+const MainImage = styled.div`
+	max-width:100%;
+	max-height:400px;
+	position:relative;
+	overflow:hidden;
+	transition: max-height 500ms ease;
 
-  img{
-    max-width:inherit;
-    filter: blur(2px);
-    transition: filter 500ms ease;
-  }
+	&.withMargin {
+		margin-bottom:10px;
+	}
 
-  @media only screen and (max-width:500px){
-    max-height:75px;
+	img{
+		max-width:inherit;
+		filter: blur(2px);
+		transition: filter 500ms ease;
+	}
 
-    img{
-      filter: blur(4px);
-    }
-  }
+	@media only screen and (max-width:500px){
+		max-height:75px;
+	}
 `;
+
+const FirstGalleryImage = MainImage.withComponent('figure');
+
 
 const Overlay = styled.figcaption`
   position:absolute;

@@ -74,16 +74,19 @@ export default class LazyLoad extends React.Component{
 	}
 }
 
-const LazyLoadComponent = styled.div`
-background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=);
+const LazyLoadComponent = styled.div.attrs({
+	style: (props) => ({
+		'backgroundImage': (!props.lazyLoaded)
+			? 'url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=)'
+			: `url(${props['data-src']})`,
+		'opacity': (!props.lazyLoaded) ? 0 : 1
+	})
+})`
+position:relative;
 background-size:cover;
 background-repeat:no-repeat;
 background-position:top center;
+width:100%;
+height:100%;
 transition: opacity 500ms ease;
-opacity:0;
-
-${props => props.lazyLoaded && css`
-	opacity: 1;
-  background-image: url(${props['data-src']});
-`}
 `
