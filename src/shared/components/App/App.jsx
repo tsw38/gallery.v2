@@ -96,7 +96,7 @@ export default class App extends React.Component {
           ]}
           meta={[
             {name: "description", content: "Photographer &amp; Small Scale Explorer. As a Chicago transplant via New Jersey I\'ve traveled a fair amount and have found the most joy out of capturing you in your element. Let me prove it."},
-            {name: "keywords", content: "photography, Photography, photographer, Photographer, Tyler Scott Williams, Tyler Scott, Tyler, tyler scott, tyler scott williams, wedding, headshots, headshot, portraits, wedding day, portrait, dslr, new york, New York, Manhattan, New York City, New York, New Jersey, Jersey City, JC, NJ, commercial, blog, contact, Chicago, Chi, Chitown, south west florida, Florida, Senior Portraits, Maternity Portraits, Commercial, Professional Photography, Illinois, Chicago IL, 60657"},
+            {name: "keywords", content: "photography, photographer, headshot photography, wedding photography, portrait photography, Tyler Scott Williams, Tyler Scott, wedding, headshots, headshot, portraits, wedding day, portrait, dslr, new york, New York, Manhattan, New York City, New York, New Jersey, Jersey City, JC, NJ, commercial, blog, contact, Chicago, Chi, Chitown, south west florida, Florida, Senior Portraits, Maternity Portraits, Commercial, Professional Photography, Illinois, Chicago IL, 60657"},
             {property: "og:site_name", content: 'Tyler Scott | Chicago Wedding & Portrait Photographer'},
             {property: "og:type", content: 'website'},
             {property: "og:url", content: 'https://tylerscott.gallery/'},

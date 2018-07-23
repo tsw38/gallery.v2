@@ -117,11 +117,10 @@ class Gallery extends React.Component{
   render(){
     const {albumName} = this.state;
     const firstImage = this.state[albumName] && this.state[albumName].images.find(image => image.isThumbnail);
-
     return (
       <ViewWrapper page="gallery"
         render={this.state.render}>
-        <Helmet title="Gallery - Chicago Wedding & Portrait Photographer" />
+        <Helmet title={`${firstImage ? (firstImage.albumName + ' ') : ''}Gallery - Chicago Wedding & Portrait Photographer`} />
         <GalleryWrapper>
           {firstImage &&
             <HeaderImage
