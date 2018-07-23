@@ -204,7 +204,6 @@ const Canvas = styled.div`
   max-width: 75%;
   min-width:1px;
   z-index: 2010;
-  transition:background-image 500ms ease;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=);
   background-repeat:no-repeat;
   background-position:center;
