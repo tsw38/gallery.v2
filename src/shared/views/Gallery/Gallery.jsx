@@ -103,15 +103,13 @@ class Gallery extends React.Component{
     const {albumName} = this.state;
     const { ArchiveActions } = this.props.actions;
 
-    return this.state[albumName] && this.state[albumName].images.map((image, index) => {
-      return (
-        <GalleryImage
-          key={`${this.props.state.gallery.key}-${index}`}
-          directory={image.url}
-          onClick={this.imageClickWrapper(index)}
-          fileName={image.photoName} />
-      )
-    });
+    return this.state[albumName] && this.state[albumName].images.map((image, index) => 
+      <GalleryImage
+        key={`${this.props.state.gallery.key}-${index}`}
+        directory={image.url}
+        onClick={this.imageClickWrapper(index)}
+        fileName={image.photoName} />
+    );
   }
 
   render(){

@@ -9,10 +9,10 @@ import {
 	Variables
 } from '../../utils';
 
+import {
+	LazyLoad
+} from '../../components';
 export default class Thumbnail extends React.Component{
-	constructor(props){
-		super(props);
-	}
 	render() {
 		const {
 			url,
@@ -20,16 +20,19 @@ export default class Thumbnail extends React.Component{
 			photoName
 		} = this.props;
 
+		if(!photoName) return null;
+
 		const image = `${Variables.origin}/api/images/${url}/${photoName}`;
+		
 		return (
 			<StyledLink to={url} onClick={this.props.onClick}>
-				<ThumbnailWrapper
-					image={image}>
-					<ThumbImage src={image} alt={photoName} />
+				<LazyLoad
+					data-src={image}
+					scrollListener={'.archive'}>
 					<HoverText>
 						<span>{albumName}</span>
 					</HoverText>
-				</ThumbnailWrapper>
+				</LazyLoad>
 			</StyledLink>
 		)
 	}
@@ -37,8 +40,9 @@ export default class Thumbnail extends React.Component{
 
 const StyledLink = styled(Link)`
 	display:inline-block;
-  overflow: hidden;
-  height: 25vw;
+	overflow: hidden;
+	height: 25vw;
+	position:relative;
 
 	@media only screen and (max-width: 500px){
 		height:45vh;
@@ -87,7 +91,7 @@ const HoverText = styled.div`
 		transition: color 500ms ease, transform 500ms ease, background-color 500ms ease;
 
 		@media (hover: hover) {
-			${ThumbnailWrapper}:hover & {
+			${StyledLink}:hover & {
 				background-color: rgba(255, 255, 255, 0.75);
 				transform: scale(0.9);
 				color: ${Variables.textBlack};

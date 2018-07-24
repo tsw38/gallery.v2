@@ -5,32 +5,29 @@ import styled, { css } from 'styled-components';
 import { Viewport, debounce } from '../../utils';
 
 export default class LazyLoad extends React.Component{
-	constructor(props) {
-		super(props);
-		this.lazyRef = React.createRef();
-		this.state = {
-			lazyLoaded: false
-		}
-    this.loadImage = this.loadImage.bind(this);
-	}
+	lazyRef = React.createRef();
+	state = {
+		lazyLoaded: false
+	};
 
-	async componentDidMount(){
-    if(this.props.bypassViewport){
-      // console.warn('bypassing viewport check');
-      this.loadImage(this.props['data-src']);
-    } else {
-      if (!Viewport.isTopInViewport(this.lazyRef.current)) {
-  			this.bindScroll();
-  		} else {
-  			this.unbindScroll();
-  			this.loadImage(this.props['data-src']);
-  		}
-    }
+	componentDidMount(){
+		if(this.props.bypassViewport){
+			this.loadImage(this.props['data-src']);
+		} else {
+			if (!Viewport.isTopInViewport(this.lazyRef.current)) {
+				this.bindScroll();
+			} else {
+				this.unbindScroll();
+				this.setState({
+					lazyLoaded: true
+				});
+			}
+		}
 
 	}
 
 	bindScroll() {
-		document.querySelector(this.props.scrollListener).addEventListener('scroll', this.scrollDebounce, false);
+		document.querySelector(this.props.scrollListener).addEventListener('scroll', this.scrollDebounce);
 		//just in case if it's 'lazyLoaded', hide it
 		this.setState({
 			lazyLoaded: false
@@ -38,7 +35,7 @@ export default class LazyLoad extends React.Component{
 	}
 
 	unbindScroll() {
-		document.querySelector(this.props.scrollListener).removeEventListener('scroll', this.scrollDebounce, false);
+		document.querySelector(this.props.scrollListener).removeEventListener('scroll', this.scrollDebounce);
 	}
 
 	componentWillUnmount() {
@@ -52,10 +49,10 @@ export default class LazyLoad extends React.Component{
 	}, 100);
 
 	loadImage = (src) => {
-    // console.warn('lazy load working overtime', src);
+		if(!this.lazyRef.current) return;
 		const img = new Image();
 		img.src = src || this.props['data-src'];
-	  img.onload = () => {
+		img.onload = () => {
 			this.setState({
 				lazyLoaded: true
 			})
@@ -65,7 +62,7 @@ export default class LazyLoad extends React.Component{
 	render(){
 		return(
 			<LazyLoadComponent
-        data-src={this.props['data-src']}
+        		data-src={this.props['data-src']}
 				innerRef={this.lazyRef}
 				lazyLoaded={this.state.lazyLoaded}>
 					{this.props.children}
