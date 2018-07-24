@@ -71,7 +71,7 @@ class Archive extends React.Component{
 
   generateThumbnails() {
     const { gallery } = this.state;
-    return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map((item) => {
+    return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map(item => {
       return (
         <Thumbnail
           key={uuid()}
