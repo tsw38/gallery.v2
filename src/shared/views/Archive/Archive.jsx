@@ -71,17 +71,18 @@ class Archive extends React.Component{
 
   generateThumbnails() {
     const { gallery } = this.state;
-    return (gallery.length) ? gallery.slice(0, gallery.length - (gallery.length%3)).map(item => {
-      return (
+
+    return (gallery.length) ? gallery
+      .slice(0, gallery.length - (gallery.length%3))
+      .map(({url, albumName, photoName}) => 
         <Thumbnail
           key={uuid()}
-          onClick={() => this.onThumbnailClick(item.url)}
-          albumName={item.albumName}
-          photoName={item.photoName}
-          url={item.url}>
+          onClick={() => this.onThumbnailClick(url)}
+          albumName={albumName}
+          photoName={photoName}
+          url={url}>
         </Thumbnail>
-      )
-    }) : null;
+    ) : null;
   }
 
   render(){
