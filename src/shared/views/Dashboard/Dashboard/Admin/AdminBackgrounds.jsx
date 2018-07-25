@@ -30,11 +30,10 @@ class AdminBackgrounds extends React.Component{
       const { actions } = this.props;
       const { GlobalActions } = actions;
       const images = await GlobalActions.imagesHelper.getAllImages();
+      console.log(images);
       this.setState({
         images
       })
-      //TODO: set images inside provider,
-      //TODO: display images on page
     }
   }
   render(){

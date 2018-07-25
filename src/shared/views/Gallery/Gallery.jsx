@@ -52,19 +52,23 @@ class Gallery extends React.Component{
 
     if (!ObjectUtil.deepFind(parentState, `${albumName}`)) {
       const images = await actions.ArchiveActions.gallery.getGallery(albumName);
-      this.setState({
-        ...this.state,
-        [albumName]: {
-          images
-        },
-      }, async () => {
-        setTimeout(async () => {
-          await stateUpdater('gallery', {
-            ...this.state,
-            render: true
-          });
-        }, 0);
-      })
+      if(!images.length){ //PHONEY GALLERY
+        global.location = '/archive';
+      } else {
+        this.setState({
+          ...this.state,
+          [albumName]: {
+            images
+          },
+        }, async () => {
+          setTimeout(async () => {
+            await stateUpdater('gallery', {
+              ...this.state,
+              render: true
+            });
+          }, 0);
+        })
+      }
     } else {
       setTimeout(async () => {
         await stateUpdater('gallery', {
