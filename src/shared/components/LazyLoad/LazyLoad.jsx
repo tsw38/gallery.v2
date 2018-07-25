@@ -11,19 +11,14 @@ export default class LazyLoad extends React.Component{
 	};
 
 	componentDidMount(){
-		if(this.props.bypassViewport){
-			this.loadImage(this.props['data-src']);
-		} else {
-			if (!Viewport.isTopInViewport(this.lazyRef.current)) {
-				this.bindScroll();
-			} else {
+		if(!!this.lazyRef.current){
+			if (Viewport.isTopInViewport(this.lazyRef.current)) {
 				this.unbindScroll();
-				this.setState({
-					lazyLoaded: true
-				});
+				this.loadImage();
+			} else {
+				this.bindScroll();
 			}
 		}
-
 	}
 
 	bindScroll() {
@@ -44,14 +39,14 @@ export default class LazyLoad extends React.Component{
 
 	scrollDebounce = debounce(() => {
 		if (Viewport.isTopInViewport(this.lazyRef.current)) {
-			this.loadImage(this.props['data-src']);
+			this.loadImage();
 		}
 	}, 100);
 
-	loadImage = (src) => {
+	loadImage = () => {
 		if(!this.lazyRef.current) return;
 		const img = new Image();
-		img.src = src || this.props['data-src'];
+		img.src = this.props['data-src'];
 		img.onload = () => {
 			this.setState({
 				lazyLoaded: true
@@ -62,7 +57,7 @@ export default class LazyLoad extends React.Component{
 	render(){
 		return(
 			<LazyLoadComponent
-        		data-src={this.props['data-src']}
+    		data-src={this.props['data-src']}
 				innerRef={this.lazyRef}
 				lazyLoaded={this.state.lazyLoaded}>
 					{this.props.children}
