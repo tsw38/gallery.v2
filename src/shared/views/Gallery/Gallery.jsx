@@ -107,7 +107,7 @@ class Gallery extends React.Component{
     const {albumName} = this.state;
     const { ArchiveActions } = this.props.actions;
 
-    return this.state[albumName] && this.state[albumName].images.map((image, index) => 
+    return this.state[albumName] && this.state[albumName].images.map((image, index) =>
       <GalleryImage
         key={`${this.props.state.gallery.key}-${index}`}
         directory={image.url}
@@ -120,8 +120,10 @@ class Gallery extends React.Component{
     const {albumName} = this.state;
     const firstImage = this.state[albumName] && this.state[albumName].images.find(image => image.isThumbnail);
     return (
-      <ViewWrapper page="gallery"
-        render={this.state.render}>
+      <ViewWrapper
+        page="gallery"
+        render={this.state.render}
+        blur={this.state.activeLightbox}>
         <Helmet title={`${firstImage ? (firstImage.albumName + ' ') : ''}Gallery - Chicago Wedding & Portrait Photographer`} />
         <GalleryWrapper>
           {firstImage &&

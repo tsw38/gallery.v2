@@ -14,7 +14,9 @@ export default class ViewWrapper extends React.Component {
         <Header hideMenu={this.props.hideMenu} />
         <Page
           render={this.props.render}>
-          <PageContainer className={this.props.page}>
+          <PageContainer
+            className={this.props.page}
+            blur={this.props.blur}>
             {this.props.children}
           </PageContainer>
         </Page>
@@ -39,6 +41,8 @@ const PageContainer = styled.div`
   height: inherit;
   width: inherit;
   position:relative;
+  transition: filter 1s ease;
+  filter: ${props => props.blur ? 'blur(10px)' : ''};
 
   &.archive, &.gallery{
     overflow-y: auto;

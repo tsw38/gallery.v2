@@ -183,7 +183,7 @@ const LightboxBackground = styled.div`
     z-index:2000;
     user-select:initial;
     pointer-events:initial;
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.85);
   `}
 `
 
