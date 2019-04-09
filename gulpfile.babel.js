@@ -1,11 +1,11 @@
-import gulp from 'gulp';
-import shell from 'gulp-shell';
-import dotenv from 'dotenv';
+const gulp = require('gulp');
+const shell = require('gulp-shell');
+const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
-gulp.task('dev:watch', shell.task(`nodemon --exec node ./build/${process.env.VERSION_NUMBER}/server/server.js`));
+const package = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json'), 'utf-8'));
 
-gulp.task('mysqldump', shell.task(`mysqldump -u root -psaxophone1 tylerscott_gallery > tylerscottgallery.sql`));
-
-gulp.task('lazy', shell.task(`gulp mysqldump && git add . && git commit -m "lazy" && git push origin master && git push production master`));
+gulp.task('server', shell.task(`nodemon --exec node ./dist/${package.version}/server/server.bundle.js`));

@@ -1,81 +1,88 @@
-const path                    = require('path');
-const webpack                 = require('webpack');
-const UglifyJsPlugin          = require('uglifyjs-webpack-plugin');
-const dotenv                  = require('dotenv');
-const dotenv_webpack          = require('dotenv-webpack');
+const fs = require('fs');
+const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 dotenv.config();
 
-// console.log('this is the origin', process.env);
-module.exports = [
-  {
-    name: 'client',
-    target: 'web',
-    entry: './src/client/renderer.js',
-    output: {
-      path: path.join(__dirname, `build/${process.env.VERSION_NUMBER}/client/`),
-      filename: 'bundle.js',
-      publicPath: '/build/',
-    },
-    mode: 'development',
-    devtool: 'source-map',
-    module: {
-      rules: [
-        //run all javascript through babel loader
-        {
-          test: /\.jsx?$/,
-          exclude: /(node_modules\/)/,
-          loader: 'babel-loader'
-        }
-      ]
-    },
-    optimization: {
-      minimize: false,
-      minimizer: [
-        new UglifyJsPlugin({
-          test: /\.jsx?$/i,
-          exclude: /(node_modules\/)/,
-          sourceMap: true,
-          uglifyOptions: {
-            ecma: 6,
-            warnings: true,
-            compress: false,
-            topLevel: true,
-            ie8: false,
-          }
-        })
-      ]
-    },
-    plugins: [
-      new dotenv_webpack(),
-      new webpack.optimize.OccurrenceOrderPlugin()
-    ]
-  },
-  {
-    name: 'server',
-    target: 'node',
-    entry: [
-      'babel-polyfill',
-      './src/server/server.js',
-    ],
-    output: {
-      path: path.join(__dirname, `build/${process.env.VERSION_NUMBER}/server/`),
-      filename: 'server.js',
-      libraryTarget: 'commonjs2',
-      publicPath: '/build/',
-    },
-    mode: 'development',
-    devtool: 'source-map',
-    module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /(node_modules\/)/,
-          loader: 'babel-loader'
-        }
-      ],
-    },
-    plugins: [
-    ]
-  }
-];
+const package = JSON.parse(fs.readFileSync(path.resolve(__dirname, './package.json'), 'utf-8'));
+
+const aliases = {
+    utils: path.resolve(__dirname, 'src/utils'),
+	config: path.resolve(__dirname, 'src/config'),
+	styles: path.resolve(__dirname, 'src/styles'),
+    actions: path.resolve(__dirname, 'src/actions'),
+    icons: path.resolve(__dirname, 'src/assets/icons'),
+    reducers:  path.resolve(__dirname, 'src/reducers'),
+    constants:path.resolve(__dirname, 'src/constants'),
+    images: path.resolve(__dirname, 'src/assets/images'),
+    libraries:  path.resolve(__dirname, 'src/libraries'),
+	components: path.resolve(__dirname, 'src/components'),
+    common: path.resolve(__dirname, 'src/components/common')
+}
+
+module.exports = [{
+	name: 'client',
+	target: 'web',
+	entry: './src/index.js',
+	output: {
+		path: path.join(__dirname, `./dist/${package.version}/client`),
+		filename: 'bundle.js',
+		publicPath: '/dist/'
+	},
+	mode: 'development',
+	devtool: 'source-map',
+	module: {
+		rules: [
+			//run all javascript through babel loader
+			{
+				test: /\.jsx?$/,
+				exclude: /(node_modules\/)/,
+				loader: 'babel-loader',
+			}
+		]
+	},
+	resolve: {
+		extensions: ['.js', '.jsx'],
+		alias: aliases
+	},
+	plugins: [
+		new Dotenv(),
+		new webpack.optimize.OccurrenceOrderPlugin()
+	]
+},
+{
+	name: 'server',
+	target: 'node',
+	entry: [
+		'@babel/polyfill',
+		'./src/server/server.js'
+	],
+	output: {
+		path: path.join(__dirname, `./dist/${package.version}/server`),
+		filename: 'server.bundle.js',
+		publicPath: '/dist/'
+	},
+	mode: 'development',
+	devtool: 'source-map',
+	module: {
+		rules: [
+			//run all javascript through babel loader
+			{
+				test: /\.jsx?$/,
+				exclude: /(node_modules\/)/,
+				loader: 'babel-loader',
+			}
+		]
+	},
+	resolve: {
+		extensions: ['.js', '.jsx'],
+		alias: aliases
+	},
+	plugins: [
+		new Dotenv(),
+		new webpack.optimize.OccurrenceOrderPlugin()
+	]
+}];

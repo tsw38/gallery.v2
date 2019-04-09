@@ -1,15 +1,15 @@
 {
-  "presets":[
-    "env",
-    "react",
-    "stage-0"
-  ],
-  "plugins":[
-    ["babel-plugin-styled-components", {
+	"presets": [
+		"@babel/preset-env",
+		"@babel/preset-react"
+	],
+	"plugins": [
+		"@babel/plugin-proposal-class-properties",
+		["babel-plugin-styled-components",
+		{
+			"displayName": true,
+      "pure": true,
       "ssr": true
-    }],
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "transform-runtime"
-  ]
+		}]
+	]
 }
