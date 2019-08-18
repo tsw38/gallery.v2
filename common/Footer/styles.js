@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {black_hover_rgba, white_hover_rgba} from 'styles/colors';
+import {black_hover_rgba, white_hover_rgba, black} from 'styles/colors';
 
 export const Footer = styled.header`
     display: grid;
@@ -21,8 +21,10 @@ export const Theme = styled(FooterContent)`
     transition: all 250ms ease;
 
     svg {
-        transform: scale(0.75);
+        transform: scale(0.70);
         transform-origin: center;
+        fill: ${black};
+        transition: inherit;
     }
 
     &:hover {

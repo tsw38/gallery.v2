@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {black_hover_rgba, white_hover_rgba} from 'styles/colors';
+import {black_hover_rgba, white_hover_rgba, black} from 'styles/colors';
 
 export const Header = styled.header`
     display: grid;
@@ -26,6 +26,11 @@ export const HeaderContent = styled.div`
         font-weight: 400;
         text-transform: uppercase;
         transition: all 250ms ease;
+
+        svg {
+            fill: ${black};
+            transition: inherit;
+        }
 
         &:hover {
             background-color: ${black_hover_rgba};

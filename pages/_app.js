@@ -6,6 +6,7 @@ import Head from 'common/Head'
 import Layout from 'common/Layout';
 import withReduxStore from 'utilities/withStore';
 
+
 class MyApp extends App {
     render() {
         const { Component, pageProps, reduxStore } = this.props;

@@ -1,7 +1,12 @@
-
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+
+import thunk from 'libraries/thunk';
+import {canUseDom} from 'utilities/canUse';
+
 import actionTypes from 'constants';
+
+import theme from 'reducers/ThemeReducer';
 
 const exampleInitialState = {
     lastUpdate: 0,
@@ -36,8 +41,13 @@ export const reducer = (state = exampleInitialState, action) => {
 
 export function initializeStore (initialState = exampleInitialState) {
     return createStore(
-        reducer,
+        combineReducers({
+            // reducer,
+            theme
+        }),
         initialState,
-        composeWithDevTools(applyMiddleware())
+        composeWithDevTools(applyMiddleware(
+            thunk.withServer({isServer: canUseDom()})
+        ))
     )
 }

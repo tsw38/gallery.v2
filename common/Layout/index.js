@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames';
+import { connect } from 'react-redux';
 
 import Header from 'common/Header';
 import Footer from 'common/Footer';
@@ -9,15 +10,25 @@ import Fonts from 'common/Layout/fonts';
 import Links from 'common/Layout/links';
 // import Layout from 'common/Layout/styles';
 
+import {getTheme, setTheme} from 'actions/ThemeActions';
+
 import { initGA, logPageView } from 'utilities/analytics';
 
-export default class LayoutWrapper extends React.Component {
+class LayoutWrapper extends React.Component {
     componentDidMount() {
         if (!window.GA_INITIALIZED) {
             initGA()
             window.GA_INITIALIZED = true
         }
-          logPageView()
+
+        this.props.getTheme();
+
+        console.warn('this is the theme', this.props.theme);
+        logPageView()
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log(this.props);
     }
 
     render() {
@@ -37,3 +48,17 @@ export default class LayoutWrapper extends React.Component {
         )
     }
 };
+
+const mapStateToProps = ({theme}) => ({
+    theme
+});
+
+const mapDispatchToProps = {
+    getTheme
+}
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(LayoutWrapper)
