@@ -1,16 +1,18 @@
 import React from 'react'
 import App from 'next/app'
+import { Provider } from 'react-redux'
+
 import Head from 'common/Head'
-
 import Layout from 'common/Layout';
+import withReduxStore from 'utilities/withStore';
 
-export default class MyApp extends App {
+class MyApp extends App {
     render() {
-        const { Component, pageProps } = this.props;
+        const { Component, pageProps, reduxStore } = this.props;
         const className = this.props.router.pathname.split('/')[1].toLowerCase();
-        console.warn('this is the classname', className)
+
         return (
-            <React.Fragment>
+            <Provider store={reduxStore}>
                 <Head {...pageProps} />
                 <Layout
                     className={className && `Page--${className}`}>
@@ -18,7 +20,9 @@ export default class MyApp extends App {
                         {...pageProps}
                     />
                 </Layout>
-            </React.Fragment>
+            </Provider>
         )
     }
 }
+
+export default withReduxStore(MyApp);
