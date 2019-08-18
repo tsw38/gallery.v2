@@ -23,15 +23,42 @@ export const Theme = styled(FooterContent)`
     svg {
         transform: scale(0.70);
         transform-origin: center;
-        fill: ${black};
         transition: inherit;
     }
 
-    &:hover {
-        background-color: ${black_hover_rgba};
+    ${({theme: {theme}}) => {
+        if (theme === 'dark') {
+            return `
+                background-color: ${white_hover_rgba};
 
-        svg {
-            fill: white;
+                &:hover {
+                    background-color: ${black_hover_rgba};
+
+                    svg {
+                        fill: white;
+                    }
+                }
+
+                svg {
+                    fill: black;
+                }
+            `;
+        } else {
+            return `
+                background-color: ${black_hover_rgba};
+
+                &:hover {
+                    background-color: ${white_hover_rgba};
+
+                    svg {
+                        fill: black;
+                    }
+                }
+
+                svg {
+                    fill: white;
+                }
+            `;
         }
-    }
+    }}
 `;

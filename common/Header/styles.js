@@ -22,24 +22,62 @@ export const Header = styled.header`
 
 export const HeaderContent = styled.div`
     a {
-        background-color: ${white_hover_rgba};
         font-weight: 400;
         text-transform: uppercase;
         transition: all 250ms ease;
 
         svg {
-            fill: ${black};
             transition: inherit;
         }
 
         &:hover {
-            background-color: ${black_hover_rgba};
+            /* background-color: ${black_hover_rgba}; */
             color: white;
 
             svg {
                 fill: white;
             }
         }
+
+        ${({theme: {theme}}) => {
+            if (theme === 'dark') {
+                return `
+                    background-color: ${black_hover_rgba};
+                    color: white;
+
+                    &:hover {
+                        background-color: ${white_hover_rgba};
+                        color: black;
+
+                        svg {
+                            fill: black;
+                        }
+                    }
+
+                    svg {
+                        fill: white;
+                    }
+                `;
+            } else {
+                return `
+                    background-color: ${white_hover_rgba};
+                    color: black;
+
+                    &:hover {
+                        background-color: ${black_hover_rgba};
+                        color: white;
+
+                        svg {
+                            fill: white;
+                        }
+                    }
+
+                    svg {
+                        fill: black;
+                    }
+                `;
+            }
+        }}
     }
 `;
 

@@ -46,9 +46,24 @@ export default createGlobalStyle`
         font-family: 'Chivo', sans-serif;
         height: 100vh;
         width: 100vw;
-        background-color: teal;
-        border: 16px solid white;
+        border-width: 16px;
+        border-style: solid;
         position: relative;
+        transition: border-color 250ms ease;
+
+        ${({theme: {theme}}) => {
+            if (theme === 'dark') {
+                return `
+                    border-color: black;
+                    background-color: white;
+                `;
+            } else {
+                return `
+                    border-color: white;
+                    background-color: black;
+                `;
+            }
+        }}
     }
     ol, ul {
         list-style: none;

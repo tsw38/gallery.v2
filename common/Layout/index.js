@@ -1,6 +1,7 @@
 import React from 'react'
 import classNames from 'classnames';
 import { connect } from 'react-redux';
+import { ThemeProvider } from 'styled-components';
 
 import Header from 'common/Header';
 import Footer from 'common/Footer';
@@ -10,12 +11,12 @@ import Fonts from 'common/Layout/fonts';
 import Links from 'common/Layout/links';
 // import Layout from 'common/Layout/styles';
 
-import {getTheme, setTheme} from 'actions/ThemeActions';
+import {getTheme} from 'actions/ThemeActions';
 
 import { initGA, logPageView } from 'utilities/analytics';
 
 class LayoutWrapper extends React.Component {
-    componentDidMount() {
+    async componentDidMount() {
         if (!window.GA_INITIALIZED) {
             initGA()
             window.GA_INITIALIZED = true
@@ -23,28 +24,31 @@ class LayoutWrapper extends React.Component {
 
         this.props.getTheme();
 
-        console.warn('this is the theme', this.props.theme);
         logPageView()
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props);
     }
 
     render() {
         return (
-            <React.Fragment>
-                <Reset />
-                <Fonts />
-                <Links />
+            <ThemeProvider theme={{theme: this.props.theme}}>
+                {!!this.props.theme &&
+                    <React.Fragment>
+                        <Reset />
+                        <Fonts />
+                        <Links />
 
-                <Header />
-                <Body className={classNames(
-                    'Page',
-                    this.props.className
-                )}>{this.props.children}</Body>
-                <Footer />
-            </React.Fragment>
+                        <Header />
+                        <Body className={classNames(
+                            'Page',
+                            this.props.className,
+                            {'Page--hidden': !this.props.theme}
+                        )}>{this.props.children}</Body>
+                        <Footer />
+                    </React.Fragment>
+                }
+            </ThemeProvider>
         )
     }
 };
@@ -57,8 +61,7 @@ const mapDispatchToProps = {
     getTheme
 }
 
-
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(LayoutWrapper)
+)(LayoutWrapper)

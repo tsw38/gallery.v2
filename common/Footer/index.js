@@ -1,8 +1,11 @@
 import {Footer, Theme} from 'common/Footer/styles';
+import { connect } from 'react-redux';
 
-export default () => {
+import {setTheme} from 'actions/ThemeActions';
+
+const FooterWrapper = ({theme, setTheme}) => {
     const handleChangeTheme = () => {
-        console.warn('---------------TODO: CHANGE THEME---------------')
+        return setTheme(theme === 'dark' ? 'light' : 'dark');
     }
 
     return (
@@ -15,3 +18,16 @@ export default () => {
         </Footer>
     )
 }
+
+const mapStateToProps = ({theme}) => ({
+    theme
+});
+
+const mapDispatchToProps = {
+    setTheme
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(FooterWrapper)
