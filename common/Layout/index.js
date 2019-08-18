@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames';
 
 import Header from 'common/Header';
+import Footer from 'common/Footer';
 import Body from 'common/Body';
 import Reset from 'common/Layout/reset';
 import Fonts from 'common/Layout/fonts';
@@ -31,6 +32,7 @@ export default class LayoutWrapper extends React.Component {
                     'Page',
                     this.props.className
                 )}>{this.props.children}</Body>
+                <Footer />
             </React.Fragment>
         )
     }
