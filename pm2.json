@@ -1,0 +1,9 @@
+{
+    "apps": [
+        {
+            "name": "tylerscott.gallery",
+            "script": "npm",
+            "args": "start"
+        }
+    ]
+}

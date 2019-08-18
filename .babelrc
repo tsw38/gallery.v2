@@ -1,15 +1,12 @@
 {
-  "presets":[
-    "env",
-    "react",
-    "stage-0"
-  ],
-  "plugins":[
-    ["babel-plugin-styled-components", {
-      "ssr": true
-    }],
-    "transform-decorators-legacy",
-    "transform-class-properties",
-    "transform-runtime"
-  ]
+    "presets": ["next/babel"],
+    "plugins": [
+        ["styled-components",
+            {
+                "ssr": true,
+                "displayName": true,
+                "preprocess": false
+            }
+        ]
+    ]
 }

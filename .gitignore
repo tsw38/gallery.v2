@@ -1,5 +1,5 @@
-.env*
 node_modules
-*.css
-build
-!.env.example
+.vscode
+package-lock.json
+yarn.lock
+.next
