@@ -131,7 +131,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = (styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.main.withConfig({
   displayName: "styles",
   componentId: "y19ssw-0"
-})([""]));
+})(["&[class*=\"Page--\"]{margin-top:32px}"]));
 
 /***/ }),
 
@@ -335,7 +335,9 @@ class LayoutWrapper extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
   }
 
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_reset__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_fonts__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_links__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Body__WEBPACK_IMPORTED_MODULE_3__["default"], null, this.props.children));
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_reset__WEBPACK_IMPORTED_MODULE_4__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_fonts__WEBPACK_IMPORTED_MODULE_5__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout_links__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Header__WEBPACK_IMPORTED_MODULE_2__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Body__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      className: classnames__WEBPACK_IMPORTED_MODULE_1___default()('Page', this.props.className)
+    }, this.props.children));
   }
 
 }
@@ -1101,6 +1103,7 @@ class MyApp extends next_app__WEBPACK_IMPORTED_MODULE_1___default.a {
       pageProps
     } = this.props;
     const className = this.props.router.pathname.split('/')[1].toLowerCase();
+    console.warn('this is the classname', className);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Head__WEBPACK_IMPORTED_MODULE_2__["default"], pageProps), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(common_Layout__WEBPACK_IMPORTED_MODULE_3__["default"], {
       className: className && `Page--${className}`
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Component, pageProps)));

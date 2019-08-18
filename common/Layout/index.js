@@ -27,7 +27,10 @@ export default class LayoutWrapper extends React.Component {
                 <Links />
 
                 <Header />
-                <Body>{this.props.children}</Body>
+                <Body className={classNames(
+                    'Page',
+                    this.props.className
+                )}>{this.props.children}</Body>
             </React.Fragment>
         )
     }
