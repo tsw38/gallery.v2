@@ -42,8 +42,7 @@ class LayoutWrapper extends React.Component {
                         <Header />
                         <Body className={classNames(
                             'Page',
-                            this.props.className,
-                            {'Page--hidden': !this.props.theme}
+                            this.props.className
                         )}>{this.props.children}</Body>
                         <Footer />
                     </React.Fragment>

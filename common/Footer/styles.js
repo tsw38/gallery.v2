@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {black_hover_rgba, white_hover_rgba, black} from 'styles/colors';
 
-export const Footer = styled.header`
+export const Footer = styled.footer`
     display: grid;
     grid-template-areas: 'theme social';
     justify-content: space-between;
@@ -9,6 +9,7 @@ export const Footer = styled.header`
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 100;
 `;
 
 export const FooterContent = styled.div`
